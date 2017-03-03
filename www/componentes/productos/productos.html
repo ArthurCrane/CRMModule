@@ -1,0 +1,250 @@
+
+	<div id="contenidoProductos" >
+		<!--style="display:none"-->
+		<h1 class="page-header">
+			Productos      	
+		</h1>
+	<div class="row">	
+		<div class="col-md-9">
+		</div>
+		<div class="col-md-3">
+			<button id="botonAgregarProducto" type="button" class="btn blackButton btn-lg btn-block" ng-click="borrarMensajes()" data-toggle="modal" data-target="#modalNuevoProducto">Agregar Producto</button>
+		</div>		
+	</div>    
+	</br>  	
+
+
+	    <input type="text" class="form-control" placeholder="Buscar producto por nombre" ng-model="query">
+		</br>
+
+		<table  class="table letra-14" width="50%"  align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-3" ng-if="configProductos.imagen==true"></th>
+								<th class="col-md-7"></th>
+								<th class="col-md-3" ng-if="configProductos.imagen==false"></th>
+								<th class="col-md-2"></th>		
+							</tr>	
+						</thead>
+					 	<tbody>
+
+					 		<tr dir-paginate="producto in productos | filter:query | itemsPerPage:10" >
+
+								<td ng-if="configProductos.imagen==true"><img src="{{producto.imagen}}"  width="50" height="60" align="center"></td>
+							
+								<td><h4>{{producto.nombreProducto}} </h4> 
+									<small>Precio: {{producto.precio}} Descripción: {{producto.descripcion}}</small>
+
+									<small>
+										<div ng-if="configProductos.propiedades==true"> Propiedades: {{producto.propiedades}} </div>
+										<div ng-if="configProductos.existencias==true"> Existencias: {{producto.existencias}} </div>
+									</small>
+
+
+								</td>	
+								<td ng-if="configProductos.imagen==false"></td>
+								<td>	
+									<button  class="btn blueButton" ng-click="setProductoAModificar(producto)" data-toggle="modal" data-target="#modalEditarProducto">  <span class="glyphicon glyphicon-pencil"></span></button>								
+									<button  class="btn blueButton " data-toggle="modal" data-target="#confirm" ng-click="setProductoABorrar(producto)" > <span class="glyphicon glyphicon-trash"></button>
+									
+
+								</td>
+							</tr>	
+						</tbody>										
+		</table>	
+
+		<div id="paginacion" >
+						
+					   <dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
+					 </div>
+		</div>
+
+
+
+<!--
+	
+	<input type="text" class="form-control" placeholder="Buscar producto por nombre" ng-model="query">
+	</br>
+		<div class="panel panel-default">			
+			<div class="panel-body">				
+				<div class="row table-responsive">
+
+					<table  class="table letra-14" width="50%"  align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th >Nombre</th>
+								<th >Precio</th>
+								<th class="col-md-3">Descripción</th>
+								<th ng-if="configProductos.propiedades==true">Propiedades</th>
+								<th ng-if="configProductos.existencias==true">Existencias</th>		
+								<th>Acción</th>	
+												
+							</tr>	
+						</thead>
+					 	<tbody>
+					 		<tr dir-paginate="producto in productos | filter: query  | itemsPerPage:5">
+								<td>{{producto.nombreProducto}}</td>
+								<td>{{producto.precio}}</td>
+								<td>{{producto.descripcion}}</td>
+								<td ng-if="configProductos.propiedades==true" >{{producto.propiedades}}</td>
+								<td ng-if="configProductos.existencias==true" >{{producto.existencias}}</td>
+								<td>
+									<button  class="btn btn-success" ng-click="setProductoAModificar(producto)" data-toggle="modal" data-target="#modalEditarProducto">  <span class="glyphicon glyphicon-pencil"></span></button>								
+									<button  class="btn btn-danger " data-toggle="modal" data-target="#confirm" ng-click="setProductoABorrar(producto)" > <span class="glyphicon glyphicon-trash"></button>
+								</td>
+							</tr>	
+						</tbody>										
+					</table>	
+
+					<div id="paginacion" >
+						
+					   <dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
+					 </div>
+
+				</div>
+			</div>
+		</div>
+-->
+
+
+
+		<div class="modal fade" id="confirm" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+					  <div class="modal-body">
+					    ¿Estás seguro de que quieres eliminar el producto?
+					  </div>
+					  <div class="modal-footer">
+					    <button type="button" data-dismiss="modal" ng-click="deleteProducto()" class="btn blackButton" id="delete">Sí</button>
+					    <button type="button" data-dismiss="modal" class="btn">No</button>
+					  </div>
+					</div>
+				</div>
+		</div>
+
+
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalNuevoProducto" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+							<h1>Agregar un nuevo Producto</h1>	
+							<form name="productosForm" novalidate			
+							ng-submit=" addProducto()" >
+								</br>
+								Nombre:</br>
+								<input ng-model="NuevoProducto.nombreProducto" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorNombre}}</div>
+
+								Precio:
+								<input ng-model="NuevoProducto.precio" class="form-control" required/>	
+								<div class="errorMensaje" >{{errores.errorPrecio}}</div>
+						
+
+								Descripción: </br>
+								<textarea class="form-control" rows="5" ng-model="NuevoProducto.descripcion"></textarea>
+								<div class="errorMensaje" >{{errores.errorDescripcion}}</div>
+								<div ng-if="configProductos.propiedades==true">
+									Propiedades: </br>
+									<textarea class="form-control" rows="5" ng-model="NuevoProducto.propiedades"></textarea>
+									<div class="errorMensaje" >{{errores.errorPropiedades}}</div>
+								</div>
+
+								<div ng-if="configProductos.existencias==true">
+									Existencias: </br>
+									<textarea class="form-control" rows="5" ng-model="NuevoProducto.existencias"></textarea>
+									<div class="errorMensaje" >{{errores.errorExistencias}}</div>
+								</div>
+
+
+
+
+								Foto de Producto:</br>
+								<input id="fileupload" type="file" name="files[]" data-url="server/php/">
+
+								</br>
+								<button class="btn blackButton btn-lg btn-block" id="botonAgregarProducto" type="submit">Agregar Producto</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>	  
+	
+
+
+
+	<!--Fin del Modal-->
+
+
+
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalEditarProducto" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">   
+							<h1>Editar Producto</h1>	
+							<form name="productosForm" novalidate			
+							ng-submit="updateProducto()" >
+								</br>
+								
+								Nombre:
+								<input ng-model="productoAModificar.nombreProducto" class="form-control" required/>	
+								<div class="errorMensaje" >{{errores.errorNombre}}</div>
+
+								Precio:
+								<input ng-model="productoAModificar.precio" class="form-control" required/>	
+								<div class="errorMensaje" >{{errores.errorPrecio}}</div>
+						
+
+								Descripción: </br>
+								<textarea class="form-control" rows="5" ng-model="productoAModificar.descripcion"></textarea>
+								<div class="errorMensaje" >{{errores.errorDescripcion}}</div>
+								<div ng-if="configProductos.propiedades==true">
+									Propiedades: </br>
+									<textarea class="form-control" rows="5" ng-model="productoAModificar.propiedades"></textarea>
+									<div class="errorMensaje" >{{errores.errorPropiedades}}</div>
+								</div>
+								<div ng-if="configProductos.existencias==true">
+									Existencias: </br>
+									<input ng-model="productoAModificar.existencias" class="form-control" required/>
+									<div class="errorMensaje" >{{errores.errorExistencias}}</div>
+								</div>
+
+								Foto de Producto:</br>
+								<input id="fileupload2" type="file" name="files[]" data-url="server/php/">
+								</br>
+
+								<button class="btn blackButton btn-lg btn-block" id="botonAgregarProducto" type="submit">Actualizar Producto</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+
+				</div>
+		</div>	  
+	</div>
+
+
+		
+

@@ -1,0 +1,311 @@
+	<h1 class="page-header">Asignación de Responsabilidades </h1>
+
+	<input type="text" class="form-control" placeholder="Buscar vendedor por nombre" ng-model="query1"></br>
+	<table  class="table table-bordered letra-14" width="100%"  align="center">										
+		<tbody>
+			<tr dir-paginate="vendedor in vendedores | filter:query1  | itemsPerPage:10"  ng-class="{'selected': vendedor.user == selectedVendedor.user}" pagination-id="pagesVendedores">
+				<td style="cursor:pointer" ng-click="setVendedor(vendedor)" >{{vendedor.nombre}} </td>	
+			</tr>	
+		</tbody>										
+
+	</table>
+	<div id="paginacion" >
+					<dir-pagination-controls pagination-id="pagesVendedores" sytle="align:center;"></dir-pagination-controls>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-7">
+					<h3>Contactos del Vendedor</h3>	 
+				</div>
+				<div class="col-md-5">
+					<button  class="btn blackButton"  data-toggle="modal" data-target="#modalAsignarContacto">Asignar Contacto</button>
+				</div>
+			</div>	
+
+			<div class="panel panel-blue" >
+				<div ng-if="contactos.length == 0 ">
+					No hay contactos para este vendedor
+				</div>
+				<div ng-if="contactos.length > 0 " style="height:650px; ">
+					 <input type="text" class="form-control" placeholder="Buscar contacto por nombre" ng-model="query2"></br></br>
+					<table  class="table letra-14" width="50%"  align="center">
+									<thead class="thead-inverse">
+										<tr>
+											<th class="col-md-7">Nombre</th>
+											<th class="col-md-5">Acciones</th>
+										</tr>	
+									</thead>
+								 	<tbody>
+
+								 		<tr dir-paginate="contacto in contactos | filter:query2 | itemsPerPage:10" pagination-id="pagesContactos" >
+											<td> {{contacto.nombreContacto}} </td>
+											<td><button  class="btn blueButton" ng-click="setContacto(contacto)" data-toggle="modal" data-target="#modalCambiarVendedor">Cambiar Vendedor</button></td>
+										</tr>
+									</tbody>
+					</table>
+					</br>
+				</div>
+				<div id="paginacion" >
+					<dir-pagination-controls pagination-id="pagesContactos" sytle="align:center;"></dir-pagination-controls>
+				</div>
+
+			</div>
+			
+		</div>
+
+		<div class="col-md-6">		
+			<div class="row">
+				<div class="col-md-7">
+					<h3>Negocios del Vendedor</h3>	
+				</div>
+				<div class="col-md-5">
+					<button  class="btn blackButton"  data-toggle="modal" data-target="#modalAsignarNegocio">Asignar Negocio</button>
+				</div>
+			</div>			
+
+			<div class="panel panel-blue" >
+				<div ng-if="negocios.length == 0 ">
+					No hay negocios para este vendedor
+				</div>
+				<div ng-if="negocios.length > 0 " style="height:650px; ">
+					<input type="text" class="form-control" placeholder="Buscar negocio por nombre" ng-model="query3"> </br></br>
+
+					<table   class="table letra-14" width="50%"  align="center">
+									<thead class="thead-inverse">
+										<tr>
+											<th class="col-md-7">Nombre</th>
+											<th class="col-md-5">Acciones</th>
+										</tr>	
+									</thead>
+								 	<tbody>
+
+								 		<tr dir-paginate="negocio in negocios | filter:query3  | itemsPerPage:10" pagination-id="pagesNegocios" >
+											<td> {{negocio.nombre}} </td>
+											<td><button  class="btn blueButton" ng-click="setNegocio(negocio)" data-toggle="modal" data-target="#modalCambiarNegocio">Cambiar Vendedor</button></td>
+										</tr>
+									</tbody>
+					</table>
+				</br>
+				</div>
+				<div id="paginacion" >
+					<dir-pagination-controls pagination-id="pagesNegocios" ></dir-pagination-controls>
+				</div>
+
+			</div>
+
+
+
+			
+		</div>
+	</div>
+
+	
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalAsignarContacto" role="dialog">
+		<div class="modal-dialog">					    
+			<div class="modal-content">					       
+				<div class="modal-body">     
+					<h1>Asignar Contacto</h1>
+					<form name="asignacionContactoForm"	novalidate 	ng-submit=" asignarContactos()">
+
+						Vendedor:
+						</br>
+						 {{selectedVendedor.nombre}}
+						</br></br>
+						Contactos: </br>
+
+					        				    <input type="checkbox" ng-model="checkTodos" ng-click="seleccionarTodos('contactos')">Seleccionar todos
+        				    					<input type="text" class="form-control" placeholder="Buscar contacto por nombre" ng-model="query4"> </br>
+
+							        			<table  class="table table-bordered letra-14" width="50%"  align="center">
+												
+												 	<tbody>
+												 		<tr dir-paginate="contacto in contactosGerente | filter:query4 | itemsPerPage:5">
+															<td> <input type="checkbox" ng-model="contacto.isSelected">	</td>
+															<td>{{contacto.nombreContacto}} </td>	
+														</tr>	
+													</tbody>										
+												</table>	
+
+												<div id="paginacion" >
+								
+												   <dir-pagination-controls
+												       max-size="5"
+												       direction-links="true"
+												       boundary-links="true" >
+												    </dir-pagination-controls>
+												</div>
+
+
+					
+						<div class="errorMensaje" >  {{errorContactos}} </div>							
+
+						
+						</br>
+						<button class="btn blackButton btn-lg btn-block" id="botonAsignarContacto" type="submit">Asignar Contacto</button>    
+
+						</br></br>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+
+		</div>
+	</div>	  
+
+
+<!--Fin del Modal-->
+
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalAsignarNegocio" role="dialog">
+		<div class="modal-dialog">					    
+			<div class="modal-content">					       
+				<div class="modal-body">     
+					<h1>Asignar Negocio</h1>
+					<form name="asignacionContactoForm"	novalidate 	ng-submit=" asignarNegocios()">
+
+						Vendedor:
+						</br>
+						 {{selectedVendedor.nombre}}
+						</br></br>
+						Negocios: </br>
+
+					        				    <input type="checkbox" ng-model="checkTodos" ng-click="seleccionarTodos('negocios')">Seleccionar todos
+        				    					<input type="text" class="form-control" placeholder="Buscar contacto por nombre" ng-model="query5"> </br>
+
+							        			<table  class="table table-bordered letra-14" width="50%"  align="center">
+												
+												 	<tbody>
+												 		<tr dir-paginate="negocio in negociosGerente | filter:query5 | itemsPerPage:5">
+															<td> <input type="checkbox" ng-model="negocio.isSelected">	</td>
+															<td>{{negocio.nombre}} </td>	
+														</tr>	
+													</tbody>										
+												</table>	
+
+												<div id="paginacion" >
+								
+												   <dir-pagination-controls
+												       max-size="5"
+												       direction-links="true"
+												       boundary-links="true" >
+												    </dir-pagination-controls>
+												</div>
+
+
+					
+						<div class="errorMensaje" >  {{errorNegocios}} </div>							
+
+						
+						</br>
+						<button class="btn blackButton btn-lg btn-block" id="botonAsignarNegocio" type="submit">Asignar Negocio</button>    
+
+						</br></br>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+
+		</div>
+	</div>	  
+
+
+<!--Fin del Modal-->
+
+
+
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalCambiarVendedor" role="dialog">
+		<div class="modal-dialog">					    
+			<div class="modal-content">					       
+				<div class="modal-body">     
+					<h1>Cambiar Contacto de Vendedor</h1>
+					<form name="cambioContactosForm"	novalidate 	ng-submit=" cambiarVendedor()">
+						Contacto:
+						</br>
+						 {{contactoAReasignar.nombreContacto}}
+						</br></br>
+
+						Nuevo Vendedor:
+						</br>
+
+						<select class="form-control" id="sel1" ng-model="cambiovendedor.nombre">
+							<option ng-repeat="vendedor in vendedores">{{vendedor.nombre}}</option>						       	      
+						</select>
+			
+						<div class="errorMensaje" >  {{errorVendedor}} </div>						
+
+						
+						</br>
+						<button class="btn blackButton btn-lg btn-block"  type="submit">Guardar</button>    
+
+						</br></br>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+
+		</div>
+	</div>	  
+
+
+<!--Fin del Modal-->
+
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalCambiarNegocio" role="dialog">
+		<div class="modal-dialog">					    
+			<div class="modal-content">					       
+				<div class="modal-body">     
+					<h1>Cambiar Negocio de Vendedor</h1>
+					<form name="cambioNegocioForm"	novalidate 	ng-submit=" cambiarNegocioDeVendedor()">
+						Negocio:
+						</br>
+						 {{negocioAReasignar.nombre}}
+						</br></br>
+
+						Nuevo Vendedor:
+						</br>
+
+						<select class="form-control" id="sel1" ng-model="cambiovendedor.nombre">
+							<option ng-repeat="vendedor in vendedores">{{vendedor.nombre}}</option>						       	      
+						</select>
+			
+						<div class="errorMensaje" >  {{errorVendedor}} </div>						
+
+						
+						</br>
+						<button class="btn blackButton btn-lg btn-block"  type="submit">Guardar</button>    
+
+						</br></br>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+
+		</div>
+	</div>	  
+
+
+<!--Fin del Modal-->
+
+
+
+

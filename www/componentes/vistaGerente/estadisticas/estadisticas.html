@@ -1,0 +1,439 @@
+<div id="fullcontenido">
+	
+	<h1>
+		       	Estadísticas      	
+	</h1>
+
+	 <section ng-init="tab = 1 ">
+             <ul class="nav nav-tabs">
+                <li ng-class="{active:tab === 1}"><a href ng-click="setEstadistica(1)">Mis Estadísticas</a></li>                 
+                <li ng-class="{active:tab === 2}"><a href ng-click="setEstadistica(2) " ng-if="tipoUsuario=='admin'">Estadísticas por Grupo</a></li> 
+                <li ng-class="{active:tab === 3}"><a href ng-click="setEstadistica(3)" ng-if="tipoUsuario=='admin'">Estadísticas por Vendedor</a></li> 
+            </ul>
+        </section>  
+</br>
+		<div class="panel" ng-if="panel == 'individual'">
+			<div class="row">
+				<div class="col-md-4">
+		        	Filtrar por: 		  &nbsp;
+		        	<input type="radio" ng-model="filtro" value="semana" ng-click="filtroSemana()">Semana
+		        	<input type="radio"  ng-model="filtro" value="mes" ng-click= "filtroMes()"> Mes  
+		        	<input type="radio"  ng-model="filtro" value="annio" ng-click="filtroAnnio()"> Año  
+				</div>
+				<div class="col-md-8">
+				    <input type="radio"  ng-model="filtro" ng-click="enable()" value="personalizado">		        
+				    Filtro Personalizado  
+
+				    <div ng-if="enableFiltro">
+				    	Mes:  <input type="text" name="radioMes" ng-model="filtroPersonalizado.mes"  required/>
+			        	Año : <input type="text" name="radioAnnio" ng-model="filtroPersonalizado.annio"  required/>	
+						<button name="botonFiltro" class="btn blackButton" ng-click="filtroPersonalizado()" ><i class="fa fa-filter" aria-hidden="true"></i></button>    
+				    </div>	
+
+				</div>  
+				</br>
+			</div>
+		
+			</br>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="panel panel-blue">
+						<section ng-init="tab2 = 1 " >
+			                <ul class="nav nav-pills nav-stacked">
+			                    <li ng-class="{active:tab2 === 1}"><a href ng-click="tab2 = 1 ">Resumen</a></li>                 
+			                    <li ng-class="{active:tab2 === 2}"><a href ng-click="tab2 = 2 ">Totales de Venta</a></li> 
+			                    <li ng-class="{active:tab2 === 3}"><a href ng-click="tab2 = 3 ">Nuevos Contactos</a></li> 
+			                    <li ng-class="{active:tab2 === 4}"><a href ng-click="tab2 = 4 ">Actividades</a></li>                 
+			                    <li ng-class="{active:tab2 === 5}"><a href ng-click="tab2 = 5 ">Negocios</a></li> 
+			                </ul>
+			            </section>
+			        </div>
+		        </div>
+				<div class="col-md-9">
+					<div class="panel" ng-show="tab2=== 1">
+
+						<div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"> Estatus de Actividades</h3>
+
+                            </div>
+                            <div class="panel-body">		
+	                            <div class="row">
+	                            		<div class="col-md-5">
+		                            	    <h4>Actividades Completadas</h4>
+		                            	    	<h4 ><i class="fa fa-coffee"></i>  {{statusActividadesCompletadas.Comidas}}   Comidas</h4>
+												<h4><span class="glyphicon glyphicon-earphone"></span>   {{statusActividadesCompletadas.Llamadas }}   Llamadas</h4> 
+												<h4 ><i class="fa fa-users"></i> {{statusActividadesCompletadas.Reuniones}}    Reuniones</h4>
+												<h4 ><span class="glyphicon glyphicon-dashboard"></span>{{statusActividadesCompletadas.Tareas}}   Tareas</h4>
+
+		                            	</div>
+		                            	<div class="col-md-5">
+											<h4>Actividades No Completadas</h4>	
+											<h4><i class="fa fa-coffee"></i>  {{statusActividadesNoCompletadas.Comidas}}   Comidas</h4>
+											<h4><span class="glyphicon glyphicon-earphone"></span>   {{statusActividadesNoCompletadas.Llamadas }}   Llamadas</h4> 
+											<h4><i class="fa fa-users"></i> {{statusActividadesNoCompletadas.Reuniones}}    Reuniones</h4>										
+											<h4><span class="glyphicon glyphicon-dashboard"></span>{{statusActividadesNoCompletadas.Tareas}}   Tareas</h4>
+		                            	</div>
+	                           	</div>				
+
+                            </div>
+                        </div>
+
+
+					</div>
+					<div class="panel" ng-show="tab2 === 2">
+						<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Totales de Venta</h3>
+	                            </div>
+	                            <div class="panel-body">	
+	                            	<canvas style="heigth:50%" id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" 
+	                    			chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 		
+	                            </div>
+	                    </div>						
+					</div>
+					<div class="panel" ng-show="tab2 === 3">
+						<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title">Nuevos Contactos</h3>
+	                            </div>
+	                            <div class="panel-body"> 
+	                            	<canvas id="bar" class="chart chart-bar" chart-data="data3" chart-labels="labels3" 
+	                  				  chart-legend="true" chart-series="series3" chart-click="onClick"></canvas> 
+	                            </div>
+	                     </div>				
+	                   
+					</div>
+					<div class="panel" ng-show="tab2 === 4">
+						<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Actividades Realizadas</h3>
+	                            </div>
+	                            <div class="panel-body">			                            	
+									<canvas id="bar" class="chart chart-bar" chart-data="data4" chart-labels="labels4" 
+				                    chart-legend="true" chart-series="series4" chart-click="onClick"></canvas> 
+	                           	</div>
+	                    </div>						
+					</div>
+					<div class="panel" ng-show="tab2 === 5">
+
+						<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Negocios Ganados</h3>
+	                            </div>
+	                            <div class="panel-body">
+									<canvas id="bar" class="chart chart-bar" chart-data="data5" chart-labels="labels5" 
+									chart-legend="true" chart-series="series5" chart-click="onClick"></canvas> 
+	                            </div>
+	                    </div>
+						
+	                    
+
+					</div>
+				</div>
+			</div>
+
+        </div>
+
+
+        <div class="panel" ng-if="panel == 'grupal'">
+
+
+			 <div class="panel panel-blue" ng-if="tipoUsuario=='admin'">     
+			 	<div class="panel-heading">
+			 		Selecciona un grupo:
+
+			 	</div>      
+            	<div class="panel-body">
+					
+
+            		<table  class="table letra-14" width="50%"  align="center">			
+					 	<tbody>
+					 		<tr ng-repeat="grupo in grupos track by $index" ng-class="{'selected': grupo.idGrupo == selectedGrupo}" ng-click="setGrupoActual(grupo)" style="cursor:pointer">
+								<td>{{grupo.nombre}} </td>															
+							</tr>	
+						</tbody>										
+					</table>		            	
+            	</div>
+            </div>
+
+
+		
+
+			<div class="panel panel-gray" ng-if="grupoActual!=null">			
+				<h3>{{grupoActual.nombre}}</h3>	
+
+				<div class="row">
+					<div class="col-md-4">
+			        	Filtrar por: 		  &nbsp;
+     			        	<input type="radio" ng-model="filtro" value="semana" ng-click="filtroSemanaGrupo()">Semana
+
+			        	<input type="radio"  ng-model="filtro" value="mes" ng-click= "filtroMesGrupo()"> Mes  
+			        	<input type="radio"  ng-model="filtro" value="annio" ng-click="filtroAnnioGrupo()"> Año  
+					</div>
+					<div class="col-md-8">
+					    <input type="radio"  ng-model="filtro" ng-click="enable()" value="personalizado"  >
+			        	Filtro Personalizado:  
+					    <div ng-if="enableFiltro">
+					    	Mes:  <input type="text" name="radioMes" ng-model="filtroPersonalizado.mes"  required/>
+				        	Año : <input type="text" name="radioAnnio" ng-model="filtroPersonalizado.annio"  required/>	
+							<button name="botonFiltro" class="btn blackButton" ng-click="filtroPersonalizadoGrupo()" ><i class="fa fa-filter" aria-hidden="true"></i></button>    
+					    </div>        	
+					</div>  
+				</div>
+				</br>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<section ng-init="tab2 = 1 " >
+			                <ul class="nav nav-pills nav-stacked">
+			                    <li ng-class="{active:tab2 === 1}"><a href ng-click="tab2 = 1 ">Resumen</a></li>                 
+			                    <li ng-class="{active:tab2 === 2}"><a href ng-click="tab2 = 2 ">Totales de Venta</a></li> 
+			                    <li ng-class="{active:tab2 === 3}"><a href ng-click="tab2 = 3 ">Nuevos Contactos</a></li> 
+			                    <li ng-class="{active:tab2 === 4}"><a href ng-click="tab2 = 4 ">Actividades</a></li>                 
+			                    <li ng-class="{active:tab2 === 5}"><a href ng-click="tab2 = 5 ">Negocios</a></li> 
+			                </ul>
+			            </section>
+			        </div>
+					<div class="col-md-9">
+					
+						<div class="panel" ng-show="tab2===1">
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Estatus de Actividades</h3>
+	                            </div>
+	                            <div class="panel-body">		        	
+									<div class="row">
+		                            	<div class="col-md-5">
+		                            	    <h4>Actividades Completadas</h4>
+		                            	    	<h4 ><i class="fa fa-coffee"></i>  {{statusActividadesCompletadas.Comidas}}   Comidas</h4>
+												<h4><span class="glyphicon glyphicon-earphone"></span>   {{statusActividadesCompletadas.Llamadas }}   Llamadas</h4> 
+												<h4 ><i class="fa fa-users"></i> {{statusActividadesCompletadas.Reuniones}}    Reuniones</h4>
+												<h4 ><span class="glyphicon glyphicon-dashboard"></span>{{statusActividadesCompletadas.Tareas}}   Tareas</h4>
+
+		                            	</div>
+		                            	<div class="col-md-5">
+											<h4>Actividades No Completadas</h4>	
+											<h4><i class="fa fa-coffee"></i>  {{statusActividadesNoCompletadas.Comidas}}   Comidas</h4>
+											<h4><span class="glyphicon glyphicon-earphone"></span>   {{statusActividadesNoCompletadas.Llamadas }}   Llamadas</h4> 
+											<h4><i class="fa fa-users"></i> {{statusActividadesNoCompletadas.Reuniones}}    Reuniones</h4>										
+											<h4><span class="glyphicon glyphicon-dashboard"></span>{{statusActividadesNoCompletadas.Tareas}}   Tareas</h4>
+		                            	</div>
+		                           	</div>				
+
+	                            </div>
+
+                        	</div>
+						</div>
+
+
+
+						<div class="panel" ng-show="tab2 === 2">
+
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Totales de Venta</h3>
+	                            </div>
+	                            <div class="panel-body">	
+	                            	<canvas style="heigth:50%" id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" 
+		                  			 chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
+	                            </div>
+	                        </div>
+							
+						</div>
+						<div class="panel" ng-show="tab2 === 3">
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Nuevos Contactos</h3>
+	                            </div>
+	                            <div class="panel-body">	
+									  <canvas id="bar" class="chart chart-bar" chart-data="data3" chart-labels="labels3" 
+											                    chart-legend="true" chart-series="series3" chart-click="onClick"></canvas> 
+	                            </div>
+	                        </div>
+				
+		                  
+						</div>
+						<div class="panel" ng-show="tab2 === 4">
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Actividades Realizadas</h3>
+	                            </div>
+	                            <div class="panel-body">				
+									<canvas id="bar" class="chart chart-bar" chart-data="data4" chart-labels="labels4" 
+				                    chart-legend="true" chart-series="series4" chart-click="onClick"></canvas> 
+								</div>
+							</div>						
+							
+						</div>
+						<div class="panel" ng-show="tab2 === 5">
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Negocios Ganados</h3>
+	                            </div>
+	                            <div class="panel-body">	
+	                             	<canvas id="bar" class="chart chart-bar" chart-data="data5" chart-labels="labels5" 
+		              			      chart-legend="true" chart-series="series5" chart-click="onClick"></canvas> 
+	                            </div>
+	                        </div>
+
+		                 
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+        </div>
+       	<div class="panel" ng-if="panel == 'porvendedor' ">
+			 <div class="panel panel-blue">     
+			 	<div class="panel-heading">			 					
+			 		Selecciona un vendedor:
+
+			 	</div>      
+            	<div class="panel-body">
+
+            		<table  class="table letra-14" width="50%"  align="center">			
+					 	<tbody>
+					 		<tr ng-repeat="vendedor in vendedores track by $index" ng-class="{'selected': vendedor.user == selectedVendedor}"  ng-click="setVendedorActual(vendedor)" style="cursor:pointer">
+								<td>{{vendedor.nombre}} </td>															
+							</tr>	
+						</tbody>										
+					</table>		            	
+					
+            	</div>
+            </div>
+
+
+
+
+			<div class="panel panel-blue" ng-if="vendedorActual!=null">
+				<h3>{{vendedorActual.nombre}}</h3>	
+
+				<div class="row">
+					<div class="col-md-4">
+			        	Filtrar por: 		  &nbsp;
+			        		<input type="radio" ng-model="filtro" value="semana" ng-click="filtroSemana()">Semana
+
+			        	<input type="radio"  ng-model="filtro" value="mes" ng-click= "filtroMes()"> Mes  
+			        	<input type="radio"  ng-model="filtro" value="annio" ng-click="filtroAnnio()"> Año  
+					</div>
+					<div class="col-md-8">
+					    <input type="radio"  ng-model="filtro" value="personalizado" ng-click="enable()" >
+			        	Filtro Personalizado: 
+			        	<div ng-if="enableFiltro">
+					    	Mes:  <input type="text" name="radioMes" ng-model="filtroPersonalizado.mes"  required/>
+				        	Año : <input type="text" name="radioAnnio" ng-model="filtroPersonalizado.annio"  required/>	
+							<button name="botonFiltro" class="btn blackButton" ng-click="filtroPersonalizado()" ><i class="fa fa-filter" aria-hidden="true"></i></button>    
+					    </div> 			        	
+					</div>  
+				</div>
+				</br>
+
+		
+
+				
+				<div class="row">
+					<div class="col-md-3">
+						<section ng-init="tab2 = 1 " >
+			                <ul class="nav nav-pills nav-stacked ">
+			                    <li ng-class="{active:tab2 === 1}"><a href ng-click="tab2 = 1 ">Resumen</a></li>                 
+			                    <li ng-class="{active:tab2 === 2}"><a href ng-click="tab2 = 2 ">Totales de Venta</a></li> 
+			                    <li ng-class="{active:tab2 === 3}"><a href ng-click="tab2 = 3 ">Nuevos Contactos</a></li> 
+			                    <li ng-class="{active:tab2 === 4}"><a href ng-click="tab2 = 4 ">Actividades</a></li>                 
+			                    <li ng-class="{active:tab2 === 5}"><a href ng-click="tab2 = 5 ">Negocios</a></li> 
+			                </ul>
+			            </section>
+			        </div>
+					<div class="col-md-9">
+
+						<div class="panel" ng-show="tab2===1">
+
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Estatus de Actividades</h3>
+	                            </div>
+	                            <div class="panel-body">  	
+									<div class="row">
+		                            	<div class="col-md-5">
+		                            	    <h4>Actividades Completadas</h4>
+		                            	    	<h4 ><i class="fa fa-coffee"></i>  {{statusActividadesCompletadas.Comidas}}   Comidas</h4>
+												<h4><span class="glyphicon glyphicon-earphone"></span>   {{statusActividadesCompletadas.Llamadas }}   Llamadas</h4> 
+												<h4 ><i class="fa fa-users"></i> {{statusActividadesCompletadas.Reuniones}}    Reuniones</h4>
+												<h4 ><span class="glyphicon glyphicon-dashboard"></span>{{statusActividadesCompletadas.Tareas}}   Tareas</h4>
+
+		                            	</div>
+		                            	<div class="col-md-5">
+											<h4>Actividades No Completadas</h4>	
+											<h4><i class="fa fa-coffee"></i>  {{statusActividadesNoCompletadas.Comidas}}   Comidas</h4>
+											<h4><span class="glyphicon glyphicon-earphone"></span>   {{statusActividadesNoCompletadas.Llamadas }}   Llamadas</h4> 
+											<h4><i class="fa fa-users"></i> {{statusActividadesNoCompletadas.Reuniones}}    Reuniones</h4>										
+											<h4><span class="glyphicon glyphicon-dashboard"></span>{{statusActividadesNoCompletadas.Tareas}}   Tareas</h4>
+		                            	</div>
+		                           	</div>	
+	                            </div>
+	                        </div>
+
+
+						</div>
+						<div class="panel" ng-show="tab2 === 2">
+
+
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title"> Totales de Venta</h3>
+	                            </div>
+	                            <div class="panel-body">
+									<canvas style="heigth:50%" id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" 
+											                    chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
+	                            </div>
+	                        </div>							
+						</div>
+						<div class="panel" ng-show="tab2 === 3">
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title">Nuevos Contactos</h3>
+	                            </div>
+	                            <div class="panel-body">
+	                            	   <canvas id="bar" class="chart chart-bar" chart-data="data3" chart-labels="labels3" 
+		                  			  chart-legend="true" chart-series="series3" chart-click="onClick"></canvas> 
+	                            </div>
+	                        </div>				
+		                 
+						</div>
+						<div class="panel" ng-show="tab2 === 4">
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title">Actividades Realizadas</h3>
+	                            </div>
+	                            <div class="panel-body">										
+									<canvas id="bar" class="chart chart-bar" chart-data="data4" chart-labels="labels4" 
+				                    chart-legend="true" chart-series="series4" chart-click="onClick"></canvas> 
+	                            </div>
+	                        </div>							
+						</div>
+						<div class="panel" ng-show="tab2 === 5">
+
+							<div class="panel panel-blue">
+	                            <div class="panel-heading">
+	                                <h3 class="panel-title">Negocios Ganados</h3>
+	                            </div>
+	                            <div class="panel-body">
+	                            	<canvas id="bar" class="chart chart-bar" chart-data="data5" chart-labels="labels5" 
+		                   			chart-legend="true" chart-series="series5" chart-click="onClick"></canvas> 
+	                            </div>
+
+	                        </div>					
+		   				</div>
+					</div>
+				</div>
+			</div>
+
+
+       	</div>
+
+
+
+
+</div>

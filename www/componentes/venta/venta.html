@@ -1,0 +1,458 @@
+<div ng-controller="ventaController">
+	<div id="contenidoAmostrar1"  style="display:none">		
+		<div class="row">
+					<div class="col-md-6 col-sm-12 col-xs-12" >
+						<h1>{{venta.nombre}}</h1>					
+					</div>					
+					<div class="col-md-2 col-sm-4 col-xs-12">
+								<button id="botonEditarVenta" class="btn blackButton" data-toggle="modal" data-target="#editarVenta">  
+									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Venta
+								</button></br></br>
+					</div>
+					<div class="col-md-2 col-sm-4 col-xs-12">	
+								<button  class="btn blackButton" id="botonBorrarVenta" data-toggle="modal" data-target="#confirm2"> <i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Venta</button></br></br>
+					</div>
+					<div class="col-md-2 col-sm-4 col-xs-12">	
+						<button id="botonAgregarActividad" type="button" 
+						class="btn blackButton"
+						data-toggle="modal" data-target="#modalNuevaActividad"> <i class="fa fa-plus" aria-hidden="true"></i> Agregar Actividad</button>
+					</div></br></br>
+		</div>   
+		
+	</br>
+     	<div class="panel panel-blue">
+            <div class="panel-heading">
+						<h3 class="panel-title">Datos de la Venta</h3>			
+					
+            </div>
+            <div class="panel-body">
+            	<div class="row">
+              		<div class="col-xs-10 text-left">	                       
+                        <div class="row">
+                        	<div class="col-xs-5">	
+                        		<h4>Contacto</h4>{{venta.contacto}}</br>
+								<h4>Etapa</h4>{{venta.etapa}}</br>
+								<h4>Fecha de Cierre </h4>  {{ venta.fechaCierre | date:'dd/MM/yyyy'}}</br>
+                        	</div>
+                        	<div class="col-xs-7">	
+                        		<h4>Productos</h4>
+								<table  class="table letra-14" width="50%"  align="center">
+									<thead class="thead-inverse">
+										<tr>
+											<th >Nombre</th>
+											<th >Precio</th>
+											<th >Cantidad</th>																								
+										</tr>	
+									</thead>
+										<tr ng-repeat="producto in venta.productos">
+											<td>{{producto.nombreProducto}}</td>
+											<td>{{producto.precio}}</td>
+											<td>{{producto.cantidad}}</td>
+
+								 	<tbody>
+
+								 	</tbody>
+								 </table>
+
+
+								<h4 align="right"> Total: $  {{venta.total}}</h4></br></br>
+
+                        	</div>
+                        </div>
+                    </div>
+               		<div class="col-xs-2">
+               			</i>
+               			<div ng-if="venta.status=='Cerrada Ganada'">
+               				<i class="fa fa-check fa-5x" aria-hidden="true"style="color:#088A29;"></i>   </br>             				
+               				</br></br>
+               			</div>
+               			<div ng-if="venta.status=='Cerrada Perdida'">
+               				<i class="fa fa-times fa-5x" aria-hidden="true" style="color:#8A0808;"></i>   </br>             				
+               				</br></br>
+               			</div>
+                        </br>
+                       
+
+                    </div>
+                                  
+                </div>
+            </div>
+
+         
+        </div>
+
+        <div class="panel panel-blue">
+            <div class="panel-heading">
+				<div class="row">
+					<div class="col-md-9">
+						 <h3 class="panel-title">Actividades Asignadas a la Venta </h3>
+
+						
+					</div>
+					<div class="col-md-3">
+						
+					</div>			
+				</div>          	
+            </div>
+            <div class="panel-body">
+				<div class="row table-responsive">
+					<table  class="table letra-14" align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-2">Status</th>
+								<th class="col-md-1">Tipo</th>
+								<th class="col-md-1">Fecha</th>
+								<th class="col-md-2">Hora</th>
+								<th class="col-md-1">Duración(min)</th>
+								<th class="col-md-3">Anotaciones</th>
+								<th class="col-md-1"></th>
+								<th class="col-md-1"></th>
+							</tr>
+						</thead>
+						<tbody>												
+							<tr ng-repeat="actividad in actividades | filter : query track by $index" 
+								ng-class='{selected : checarValor(actividad)}'>
+								<td>{{ actividad.status  }}</td>
+								<td>{{ actividad.tipo}}</td>				
+								<td> {{ actividad.fecha | date:"dd/MM/yyyy" }}</td>	
+								<td>{{ actividad.hora | date : " hh . mm . a"}}</td>						
+								<td>  {{ actividad.duracion  }}</td>
+								<td>{{ actividad.anotaciones }}	</td>
+								<td>								
+									<button class="btn blackButton" ng-click="editarActividad(actividad)" data-toggle="modal" data-target="#modalEditarActividad"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button>
+								</td>
+								<td>
+									<button  class="btn blackButton" data-toggle="modal" data-target="#confirm" ng-click="pasarActividad(actividad)" name="remove_levels" > <i class="fa fa-trash-o" aria-hidden="true"></i> Borrar </button>
+								</td>
+							</tr>	
+						</tbody>	
+					</table>	
+				</div>            	
+            </div>
+        </div>
+
+
+
+
+<div class="modal fade" id="confirm" role="dialog">
+			<div class="modal-dialog">					    
+				<div class="modal-content">					       
+				  <div class="modal-body">
+				    ¿Estás seguro de que quieres eliminar la actividad?
+				  </div>
+				  <div class="modal-footer">
+				    <button type="button" data-dismiss="modal" ng-click="borrarActividad(actividad)" class="btn blackButton" id="delete">Sí</button>
+				    <button type="button" data-dismiss="modal" class="btn">No</button>
+				  </div>
+				</div>
+			</div>
+</div>
+
+<div class="modal fade" id="confirm2" role="dialog">
+			<div class="modal-dialog">					    
+				<div class="modal-content">					       
+				  <div class="modal-body">
+				  
+					
+				   ¿Estás seguro de que quieres eliminar la venta?
+				    	
+				  </div>
+				  <div class="modal-footer">
+				    <button type="button" data-dismiss="modal" ng-click="borrarVenta()" class="btn blackButton" id="delete">Sí</button>
+				    <button type="button" data-dismiss="modal" class="btn">No</button>
+				  </div>
+				</div>
+			</div>
+</div>
+
+
+
+
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalNuevaActividad" role="dialog">
+			<div class="modal-dialog">					    
+				<div class="modal-content">					       
+					<div class="modal-body">    
+
+						<h1>Agregar una nueva Actividad</h1>	
+						<form name="actividadForm"		novalidate				
+						ng-submit=" agregarActividad()" >
+							</br>
+							Tipo:</br>
+							 <select class="form-control" id="sel2" ng-model="NuevaActividad.tipo">
+							    <option>Llamada</option>
+							    <option>Comida</option>	
+							    <option>Tarea Descubierta</option>	
+							    <option>Reunión</option>	
+							</select>
+							<div class="errorMensaje" >{{errorTipo}}</div>
+
+							Fecha:</br>
+							<input type="date"  name="input" class="form-control" ng-model="NuevaActividad.fecha" placeholder="{{dd-MM-yyyy}}" required />
+							<div class="errorMensaje" >{{errorFecha}}</div>
+						   	Hora:</br>
+							<input type="time" name="usr_time" ng-model="NuevaActividad.hora" class="form-control" required/>
+							<div class="errorMensaje" >{{errorHora}}</div>
+
+							Duración(min):</br>
+							<input ng-model="NuevaActividad.duracion" class="form-control" required/>
+							<div class="errorMensaje" >{{errorDuracion}}</div>
+
+							Anotaciones: </br>
+							<textarea class="form-control" rows="5" ng-model="NuevaActividad.anotaciones"></textarea>
+							<div class="errorMensaje" >{{errorAnotaciones}}</div>
+
+							</br>
+							<input id="botonAgregarActividad" type="submit" value="Agregar Actividad"  class="btn blackButton btn-lg btn-block"/>	
+							</br></br>				
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+
+			</div>
+		</div>	  
+</div>
+
+
+
+<!--Fin del Modal-->
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="editarVenta" role="dialog">
+			<div class="modal-dialog">					    
+				<div class="modal-content">					       
+					<div class="modal-body">     
+						<h1>Editar Información de la Venta</h1>
+						<form name="negocioForm" novalidate					
+						ng-submit="editarVenta()" >
+							</br>
+							
+							</br>Contacto:	
+							<select class="form-control" id="sel1" ng-model="ventaAModificar.contacto">
+							        <option ng-repeat="contacto in contactos">{{contacto.nombreContacto}}</option>						       	      
+							</select>
+							<div class="errorMensaje" >{{errorContacto}}</div>
+
+							Productos </br>
+								<input type="text" class="form-control" placeholder="Buscar producto por nombre" ng-model="query">
+						        <input type="checkbox" ng-model="checkTodos" ng-click="seleccionarTodos()">Seleccionar todos 
+								<table  class="table table-bordered letra-14" width="50%"  align="center"style="height:100px;">	
+									<thead class="thead-inverse">
+										<tr>
+											<th class="col-md-1"></th>
+											<th class="col-md-7">Nombre</th>
+											<th class="col-md-2">Precio</th>
+											<th class="col-md-4">Cantidad</th>
+											<th class="col-md-2">Total</th>
+											
+															
+										</tr>	
+									</thead>								
+									<tbody>
+										<tr dir-paginate="producto in productos | filter:query | itemsPerPage:5 ">
+											<td> <input type="checkbox" ng-model="producto.isSelected">	
+											</td>
+											<td>{{producto.nombreProducto}} 
+											</td>	
+											<td>{{producto.precio}}</td>
+
+											<td>												
+											<input ng-model="producto.cantidad" class="form-control" ng-change="calcularTotal(producto)" />
+											</td>
+											<td>{{producto.total}}</td>
+										</tr>	
+									</tbody>										
+								</table>					
+								{{ventaAModificar.total}}				
+								<div class="errorMensaje" >{{errorProductos}}</div>
+
+								<div id="paginacion" >								
+								   <dir-pagination-controls
+								       max-size="5"
+								       direction-links="true"
+								       boundary-links="true" >
+								    </dir-pagination-controls>
+								 </div>
+
+
+	
+
+							<div ng-if="configVentas.descuento">
+
+								</br>Descuento</br>
+								<input ng-model="ventaAModificar.descuento" class="form-control" required/>	
+								<div class="errorMensaje" >{{errorDescuento}}</div>
+
+							</div>
+							</br>	
+							Fecha de Cierre:</br>						
+
+							<input type="date" value="{{ventaAModificar.fechaCierre}}" class="form-control" ng-model="ventaAModificar.fechaCierre" placeholder="{{dd-MM-yyyy}}" required />
+							<div class="errorMensaje" >{{errorFecha}}</div>
+
+
+							</br>	 
+							Etapa: </br>
+							 <select class="form-control" id="sel2" ng-model="ventaAModificar.etapa">
+							    <option>Idea</option>
+							    <option>Contacto Establecido</option>	
+							    <option>Necesidad Descubierta</option>	
+							    <option>Propuesta Presentada</option>	
+							    <option>Negociación</option>			      
+							</select>
+							<div class="errorMensaje" >{{errorEtapa}}</div>
+
+
+							</br>
+							Status:
+							 <select class="form-control" id="sel3" ng-model="ventaAModificar.status">
+							    <option>En proceso</option>
+							    <option>Cerrada Ganada</option>	
+							    <option>Cerrada Perdida</option>								   		      
+							</select>
+							<div class="errorMensaje" >{{errorStatus}}</div>
+
+						</br>
+
+						<button class="btn blackButton btn-lg btn-block" id="botonAgregarNegocio" type="submit">Actualizar Negocio</button>    
+  
+
+							</br></br>				
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+
+			</div>
+		</div>	  
+</div>
+
+<!--Fin del Modal-->
+
+
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalEditarActividad" role="dialog">
+			<div class="modal-dialog">					    
+				<div class="modal-content">					       
+					<div class="modal-body">    
+
+						<h1>Editar Actividad</h1>	
+						<form name="actividadForm" novalidate	ng-submit="guardarActividad()";					
+						 >
+							</br>
+							Tipo:</br>
+							 <select class="form-control" id="sel2" ng-model="actividadModificada.tipo">
+							    <option>Llamada</option>
+							    <option>Comida</option>	
+							    <option>Tarea Descubierta</option>	
+							    <option>Reunión</option>	
+							</select>
+							<div class="errorMensaje" >{{errorTipo}}</div>
+
+							Status:</br>
+							 <select class="form-control" id="sel3" ng-model="actividadModificada.status">
+							    <option>Completada</option>
+							    <option>No completada</option>								   	
+							</select>
+							<div class="errorMensaje" >{{errorStatus}}</div>
+
+							Fecha:</br>
+							<input type="date" class="form-control" ng-model="actividadModificada.fecha" required placeholder="{{dd-MM-yyyy}}"/>
+							
+
+							<div class="errorMensaje" >{{errorFecha}}</div>
+							
+						   	Hora:</br>
+							<input type="time" value="{{actividadModificada.hora | date:'HH:mm'}}" class="form-control" ng-model="actividadModificada.hora" 
+							 required/>
+							<div class="errorMensaje" >{{errorHora}}</div>	
+
+
+							Duración(min):</br>
+							<input ng-model="actividadModificada.duracion" class="form-control" required/>
+							<div class="errorMensaje" >{{errorDuracion}}</div>
+
+							Anotaciones: </br>
+							<textarea class="form-control" rows="5" ng-model="actividadModificada.anotaciones"></textarea>
+							<div class="errorMensaje" >{{errorAnotaciones}}</div>
+
+							</br>
+							<input id="botonAgregarNegocio" type="submit" value="Guardar" class="btn blackButton btn-lg btn-block"/>	
+							</br></br>				
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+
+			</div>
+		</div>	  
+</div>
+
+
+
+
+
+<!--
+	<div class="modal fade" id="modalEditarActividad" role="dialog">
+			<div class="modal-dialog">					    
+				<div class="modal-content">					       
+					<div class="modal-body">    
+
+						<h1>Editar Actividad</h1>	
+						<form name="actividadForm"						
+						ng-submit=" editarActividad()" novaildate>
+							</br>
+							Status:</br>
+							{{actividadAModificar.tipo}}
+							 <select class="form-control" id="sel2" ng-model="actividadAModificar.statusNombre">
+							    <option>Completada</option>
+							    <option>No completada</option>								    
+							</select>
+
+							Tipo:</br>
+							 <select class="form-control" id="sel2" ng-model="actividadAModificar.tipo">
+							    <option>Llamada</option>
+							    <option>Comida</option>	
+							    <option>Tarea Descubierta</option>	
+							    <option>Reunión</option>	
+							</select>
+							Fecha:</br>			
+						
+							Hora:</br>{{errorHora}}
+							<input ng-model="actividadAModificar.hora" class="form-control" required/>
+							Duración(min):</br>{{errorDuracion}}
+							<input ng-model="actividadAModificar.duracion" class="form-control" required/>
+							Anotaciones: </br>
+							<textarea class="form-control" rows="5" ng-model="actividadAModificar.anotaciones"></textarea>
+							</br>
+							<input id="botonAgregarActividad" type="submit" value="Submit"  class="btn btn-primary btn-lg btn-block"/>	
+							</br></br>				
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>	  
+</div>
+
+-->
+
+
+
+
+	</div>
+</div>

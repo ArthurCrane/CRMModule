@@ -1,0 +1,447 @@
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+<div ng-controller="clientesController">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="jquery.ui.widget.js"></script>
+	<script src="jquery.iframe-transport.js"></script>
+	<script src="jquery.fileupload.js"></script>
+
+
+	<div id="contenidoContactos">
+
+		<h1 class="page-header">
+			Contactos
+	     </h1>
+
+
+	    <div class="row">
+				<div class="col-md-4">
+					Importar Contactos:
+					<input type="file" placeholder="+" file-change="handler($event,files)" ng-model="MyFiles" />   	 
+				</div>
+				<div class="col-md-4">					
+		      	</div>
+		      	<div class="col-md-4">
+		      		<button  type="button" class="btn blackButton btn-lg btn-block" data-toggle="modal" data-target="#modalNuevoContacto">Agregar Contacto</button>
+		      	</div>
+		</div>
+		</br>
+
+
+
+	     <input type="text" class="form-control" placeholder="Buscar contacto por nombre" ng-model="query">
+		</br>
+
+		<table  class="table letra-14" width="50%"  align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-3"></th>
+								<th class="col-md-7"></th>
+								<th class="col-md-2"></th>		
+							</tr>	
+						</thead>
+					 	<tbody>
+
+					 		<tr dir-paginate="cliente in clientes | filter:query | itemsPerPage:10" >
+
+								<td href="#main/contacto" 
+					 		data-ui-sref="main.contacto({nombreContacto:cliente.nombreContacto,id:cliente.idContacto})"
+							 style="cursor:pointer" ><img src="{{cliente.imagen}}"   width="50" height="60" align="center"></td>
+								<td href="#main/contacto" 
+					 		data-ui-sref="main.contacto({nombreContacto:cliente.nombreContacto,id:cliente.idContacto})"
+							 style="cursor:pointer"><h4>{{cliente.nombreContacto}} </h4> </br>
+									<small>Celular: {{cliente.celular}} Correo: {{cliente.correo}}</small>
+								</td>	
+								<td>	
+									<button  class="btn blueButton" ng-click="setClienteAModificar(cliente)" data-toggle="modal" data-target="#modalEditarContacto">  <span class="glyphicon glyphicon-pencil"></span></button>
+								
+									<button  class="btn blueButton" data-toggle="modal" data-target="#confirm" ng-click="setClienteABorrar(cliente)" > <span class="glyphicon glyphicon-trash"></button>
+								</td>
+							</tr>	
+						</tbody>										
+		</table>	
+
+
+
+
+	<div class="row">
+		<div id="paginacion" class="col-md-12 col-sm-12 col-xs-12">						
+					   <dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
+		</div>				
+	</div>
+
+
+
+
+
+
+<!--
+		<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+-->
+
+<!--
+	<input type="text" class="form-control" placeholder="Buscar cliente por nombre" ng-model="query">
+</br>
+			<div class="panel panel-default">	
+				<div class="panel-body table-responsive">	
+					
+
+					<table  class="table letra-14" align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-2">Nombre</th>
+								<th class="col-md-2">Empresa</th>
+								<th class="col-md-2" >Celular</th>
+								<th class="col-md-2">Correo</th>
+								<th class="col-md-2">Fecha de Nacimiento</th>
+								
+								<th class="col-md-2"></th>	
+							</tr>	
+						</thead>	
+					 	<tbody>						
+							<tr dir-paginate="cliente in clientes | filter: query  | itemsPerPage:10">		
+
+								<td  href="#main/contacto" data-ui-sref="main.contacto({nombreContacto:cliente.nombreContacto,id:cliente.idContacto})"
+							 style="cursor:pointer">{{cliente.nombreContacto}}</td>
+								<td>{{cliente.empresa}}</td>
+								<td >{{cliente.celular}}</td>
+								<td>{{cliente.correo}}</td>
+								<td>{{cliente.fechaNacimiento  | date:"dd/MM/yyyy" }}</td>					
+
+								<td>
+									<button  class="btn btn-success" ng-click="setClienteAModificar(cliente)" data-toggle="modal" data-target="#modalEditarContacto">  <span class="glyphicon glyphicon-pencil"></span></button>
+								
+									<button  class="btn btn-danger " data-toggle="modal" data-target="#confirm" ng-click="setClienteABorrar(cliente)" > <span class="glyphicon glyphicon-trash"></button>
+
+								</td>
+							</tr>	
+					 	<tbody>									
+					</table>	
+
+					<div id="paginacion">
+					   <dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
+					 </div>
+				</div>
+			</div>
+	</div>
+-->
+
+	<div class="modal fade" id="confirm" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+					  <div class="modal-body">
+					    ¿Estás seguro de que quieres eliminar el cliente?
+					  </div>
+					  <div class="modal-footer">
+					    <button type="button" data-dismiss="modal" ng-click="deleteCliente(cliente)" class="btn blackButton" id="delete">Sí, Eliminar Cliente</button>
+					    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+					  </div>
+					</div>
+				</div>
+	</div>
+
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalNuevoContacto" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+
+							<h1>Agregar un nuevo Contacto</h1>	
+							<form name="contactosForm" novalidate			
+							ng-submit=" insertCliente()" >
+								
+							
+										Nombre:</br>
+										<input ng-model="NuevoContacto.nombreContacto" class="form-control" required/>
+										<div class="errorMensaje" >{{errores.errorNombre}}</div>
+
+										<div ng-if="configClientes.puesto==true">
+											Puesto: </br>
+											<input ng-model="NuevoContacto.puesto" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorPuesto}}</div>
+										</div>
+
+										
+										Empresa:</br>
+										<input ng-model="NuevoContacto.empresa" class="form-control" required/>
+										<div class="errorMensaje" >{{errores.errorEmpresa}}</div>
+
+										<div ng-if="configClientes.telefonoOficina==true">											
+											Teléfono Oficina:</br>
+											<input ng-model="NuevoContacto.telefono" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorTelefonoOficina}}</div>
+										</div>
+
+										
+										Celular:</br>
+										<input ng-model="NuevoContacto.celular" class="form-control" required/>
+										<div class="errorMensaje" >{{errores.errorCelular}}</div>
+										Correo:</br>
+										<input type="email" ng-model="NuevoContacto.correo" class="form-control" required/>
+										<div class="errorMensaje" >{{errores.errorCorreo}}</div>
+										
+									
+										<div ng-if="configClientes.nombreSecretaria==true">											
+											Nombre Secretaria :</br>
+											<input ng-model="NuevoContacto.nombreSecretaria" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorNombreSecretaria}}</div>
+										</div>
+
+										<div ng-if="configClientes.telefonoSecretaria==true">											
+											Teléfono Secretaria:</br>
+											<input ng-model="NuevoContacto.telefonoSecretaria" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorTelefonoSecretaria}}</div>
+										</div>
+
+										<div ng-if="configClientes.domicilio==true">											
+											Domicilio :</br>
+											<input ng-model="NuevoContacto.domicilio" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorDomicilio}}</div>
+										</div>
+
+										Fecha de Nacimiento:</br>								
+										<input type="date"  name="input" class="form-control" ng-model="NuevoContacto.fechaNacimiento" placeholder="{{dd-MM-yyyy}}" required />
+										<div class="errorMensaje" >{{errores.errorCumpleanos}}</div>
+
+										<div ng-if="configClientes.anotaciones==true">
+											Anotaciones: </br>
+											<textarea class="form-control" rows="5" ng-model="NuevoContacto.anotaciones"></textarea>
+											<div class="errorMensaje" >{{errores.errorAnotaciones}}</div>
+										</div>
+
+										<div ng-if="configClientes.hobbies==true">
+											Hobbies:</br>
+											<textarea class="form-control" rows="5" ng-model="NuevoContacto.hobbies"></textarea>
+											<div class="errorMensaje" >{{errores.errorHobbies}}</div>
+										</div>
+
+										<div ng-if="configClientes.preferencias==true">
+											Preferencias:</br>
+											<textarea class="form-control" rows="5" ng-model="NuevoContacto.preferencias"></textarea>
+											<div class="errorMensaje" >{{errores.errorPreferencias}}</div>
+										</div>
+										<div ng-if="configClientes.estadoCivil==true">
+											Estado Civil:</br>
+											<input  class="form-control"  ng-model="NuevoContacto.estadoCivil"></textarea>
+											<div class="errorMensaje" >{{errores.errorEstadoCivil}}</div>
+										</div>
+
+
+										<div ng-if="configClientes.personalidad==true">
+											Personalidad:</br>
+											<textarea class="form-control" rows="5" ng-model="NuevoContacto.personalidad"></textarea>
+											<div class="errorMensaje" >{{errores.errorPersonalidad}}</div>
+										</div>										
+										
+										</br>
+
+										Foto de Perfil:</br>
+										<input id="fileupload" type="file" name="files[]" data-url="server/php/">						
+									</br>											
+
+								<button class="btn blackButton btn-lg btn-block" id="botonAgregarContacto" type="submit">Agregar Contacto</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+
+				</div>
+		</div>	  
+
+	<!--Fin del Modal-->
+
+
+	<!--Inicio del modal -->
+			<div class="modal fade" id="modalEditarContacto" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+
+							<h1>Editar Contacto</h1>	
+							<form name="productosForm" novalidate			
+							ng-submit="updateCliente()" >
+								</br>
+								Nombre:</br>
+								<input ng-model="clienteAModificar.nombreContacto" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorNombre}}</div>
+
+								<div ng-if="configClientes.puesto==true">
+											Puesto: </br>
+											<input ng-model="clienteAModificar.puesto" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorPuesto}}</div>
+								</div>
+								
+								Empresa:</br>
+								<input ng-model="clienteAModificar.empresa" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorEmpresa}}</div>
+								<div ng-if="configClientes.telefonoOficina==true">											
+											Teléfono Oficina:</br>
+											<input ng-model="clienteAModificar.telefono" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorTelefono}}</div>
+								</div>
+
+							
+								Celular:</br>
+								<input ng-model="clienteAModificar.celular" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorCelular}}</div>
+								Correo:</br>
+								<input type="email" ng-model="clienteAModificar.correo" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorCorreo}}</div>
+									
+									<div ng-if="configClientes.nombreSecretaria==true">											
+											Nombre Secretaria :</br>
+											<input ng-model="clienteAModificar.nombreSecretaria" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorNombreSecretaria}}</div>
+										</div>
+
+										<div ng-if="configClientes.telefonoSecretaria==true">											
+											Teléfono Secretaria:</br>
+											<input ng-model="clienteAModificar.telefonoSecretaria" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorTelefonoSecretaria}}</div>
+										</div>
+										<div ng-if="configClientes.domicilio==true">											
+											Domicilio :</br>
+											<input ng-model="clienteAModificar.domicilio" class="form-control" required/>
+											<div class="errorMensaje" >{{errores.errorDomicilio}}</div>
+										</div>
+
+
+
+
+								Fecha de Nacimiento:</br>
+								<input type="date"  name="input" class="form-control" ng-model="clienteAModificar.fechaNacimiento" placeholder="{{dd-MM-yyyy}}" required />
+
+								<div class="errorMensaje" >{{errores.errorFechaNacimiento}}</div>
+								{{NuevoContacto.fechaNacimiento}}
+
+
+										<div ng-if="configClientes.anotaciones==true">
+											Anotaciones: </br>
+											<textarea class="form-control" rows="5" ng-model="clienteAModificar.anotaciones"></textarea>
+											<div class="errorMensaje" >{{errores.errorAnotaciones}}</div>
+										</div>
+
+										<div ng-if="configClientes.hobbies==true">
+											Hobbies:</br>
+											<textarea class="form-control" rows="5" ng-model="clienteAModificar.hobbies"></textarea>
+											<div class="errorMensaje" >{{errores.errorHobbies}}</div>
+										</div>
+
+										<div ng-if="configClientes.preferencias==true">
+											Preferencias:</br>
+											<textarea class="form-control" rows="5" ng-model="clienteAModificar.preferencias"></textarea>
+											<div class="errorMensaje" >{{errores.errorPreferencias}}</div>
+										</div>
+										<div ng-if="configClientes.estadoCivil==true">
+											Estado Civil:</br>
+											<textarea class="form-control" rows="5" ng-model="clienteAModificar.estadoCivil"></textarea>
+											<div class="errorMensaje" >{{errores.errorEstadoCivil}}</div>
+										</div>
+
+
+										<div ng-if="configClientes.personalidad==true">
+
+											Personalidad:</br>
+											<textarea class="form-control" rows="5" ng-model="clienteAModificar.personalidad"></textarea>
+											<div class="errorMensaje" >{{errores.errorPersonalidad}}</div>
+										</div>																	
+								
+
+								Foto de Perfil:</br>
+								<input id="fileupload2" type="file" name="files[]" data-url="server/php/">
+
+
+								</br>
+								<button class="btn blackButton btn-lg btn-block" id="botonAgregarProducto" type="submit">Actualizar Contacto</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+
+				</div>
+			</div>	 
+
+
+</div>
+
+<!--
+
+
+					<table  class="table letra-14" align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th></th>
+								<th >Nombre</th>
+								<th ng-if="configClientes.puesto==true" >Puesto</th>
+								<th >Empresa</th>
+								<th ng-if="configClientes.telefonoOficina==true" >Teléfono Oficina</th>
+								<th >Celular</th>
+								<th >Correo</th>
+								<th >Fecha de Nacimiento</th>
+								<th ng-if="configClientes.anotaciones==true" >Anotaciones</th>
+								<th ng-if="configClientes.nombreSecretaria==true" >Secretaria</th>
+								<th ng-if="configClientes.telefonoSecretaria==true" >Tel. Sec.</th>
+								<th ng-if="configClientes.estadoCivil==true" >Estado Civil</th>
+								<th ng-if="configClientes.hobbies==true" >Hobbies</th>
+								<th ng-if="configClientes.preferencias==true" >Preferencias</th>
+								<th ng-if="configClientes.personalidad==true" >Personalidad</th>
+								<th class="col-md-1"></th>	
+								<th class="col-md-1"></th>						
+							</tr>	
+						</thead>	
+					 	<tbody>						
+							<tr dir-paginate="cliente in clientes | filter: query  | itemsPerPage:10">		
+								<td> <img src="{{cliente.imagen}}" class="img-rounded"  width="50" height="70" align="center">	</td>					
+
+								<td  href="#contacto" data-ui-sref="contacto({nombreContacto:cliente.nombreContacto,id:cliente.idContacto})"
+							 style="cursor:pointer">{{cliente.nombreContacto}}</td>
+								<td ng-if="configClientes.puesto==true">{{cliente.puesto}}</td>
+								<td>{{cliente.empresa}}</td>
+								<td ng-if="configClientes.telefonoOficina==true" >{{cliente.telefono}}</td>
+								<td >{{cliente.celular}}</td>
+								<td>{{cliente.correo}}</td>
+								<td>{{cliente.fechaNacimiento  | date:"dd/MM/yyyy" }}</td>
+								<td ng-if="configClientes.anotaciones==true">{{cliente.anotaciones}}</td>
+								<td ng-if="configClientes.nombreSecretaria==true">{{cliente.nombreSecretaria}}</td>
+								<td ng-if="configClientes.telefonoSecretaria==true">{{cliente.telefonoSecretaria}}</td>
+								<td ng-if="configClientes.estadoCivil==true">{{cliente.estadoCivil}}</td>
+								<td ng-if="configClientes.hobbies==true">{{cliente.hobbies}}</td>
+								<td ng-if="configClientes.preferencias==true">{{cliente.preferencias}}</td>
+								<td ng-if="configClientes.personalidad==true">{{cliente.personalidad}}</td>
+
+								<td>
+									<button  class="btn btn-success" ng-click="setClienteAModificar(cliente)" data-toggle="modal" data-target="#modalEditarContacto">  <span class="glyphicon glyphicon-pencil"></span></button>
+								</td>
+								<td>
+									<button  class="btn btn-danger " data-toggle="modal" data-target="#confirm" ng-click="setClienteABorrar(cliente)" > <span class="glyphicon glyphicon-trash"></button>
+
+								</td>
+							</tr>	
+					 	<tbody>									
+					</table>	
+
+
+
+
+
+
+	-->

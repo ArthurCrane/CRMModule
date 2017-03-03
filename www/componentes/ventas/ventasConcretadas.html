@@ -1,0 +1,38 @@
+<div ng-controller="ventasConcretadasController as ventasConc">	
+	<div id="contenidoAmostrar1"  style="display:none">	
+		<h1 class="page-header">
+       	Ventas Concretadas
+       </h1>
+		<div class="row">
+		 	
+			<div class="col-md-12">
+	 				<div class="row table-responsive">
+						<table  class="table letra-14 " width="50%"  align="center">
+							<thead class="thead-inverse">
+								<tr>
+									<th class="col-md-2">Nombre</th>
+									<th class="col-md-2">Contacto</th>								
+									<th class="col-md-2">Total</th>
+									<th class="col-md-2">Fecha de Cierre</th>
+									<th class="col-md-2">Status</th>
+								</tr>	
+							</thead>		
+							<tbody>
+								<tr ng-repeat="venta in ventasConcretadas | filter : query track by $index" 
+								href="#main/venta" data-ui-sref="main.venta({nombre:venta.nombre}) " style="cursor:pointer"	>
+									<td>{{venta.nombre}}</td>
+									<td>{{venta.contacto}}</td>
+								
+									<td>$ {{venta.total}}</td>
+									<td>{{venta.fechaCierre}}</td>
+									<td>{{venta.status}}</td>
+								</tr>	
+							</tbody>											
+						</table>	
+					</div>
+			</div>
+		</br></br></br></br></br></br>
+		
+		</div>
+	</div>
+</div>

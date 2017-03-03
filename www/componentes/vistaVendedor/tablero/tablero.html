@@ -1,0 +1,363 @@
+<h2>Tablero </h2>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-money fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{totalNegociosGanados}}</div>
+                                        <div>Negocios Ganados</div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{totalActividadesProximas}}</div>
+                                        <div>Actividades Próximas</div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-list fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{totalObjetivosProximos}}</div>
+                                        <div>Objetivos del Mes</div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-briefcase fa-5x" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{totalNegociosEnCurso}}</div>
+                                        <div>Negocios en Curso</div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"> Totales de Venta</h3>
+                            </div>
+                            <div class="panel-body">  
+                                  <canvas style="heigth:50%" id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
+                                        chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6">
+                         <div class="panel panel-blue">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Top Ventas</h3>
+                                </div>
+                                <div class="panel-body">    
+                                 
+                                    <div class="row" ng-if="topcontactos.length==0" style="height:300px;";>
+                                        <center>Aún no tienes ventas concretadas.<center>
+                                    </div>
+
+                                    
+                                    <div class="row" ng-if="topcontactos.length>0">
+                                        <div class="list-group">
+                                           
+                                                 <a href="#main/contacto" class="list-group-item"
+                                                    data-ui-sref="main.contacto({nombreContacto:topcontactos[0].nombre,id:topcontactos[0].idContacto})" >
+                                                    <div class="row"> 
+                                                        <div class="col-md-2">                                                
+                                                            <img src="{{topcontactos[0].imagen}}"  width="60px" height="70" align="center"></br>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="img_container"><h1 style="color:#FFCC00;"><i class="fa fa-trophy " aria-hidden="true"></i></h1></div>
+                                                        </div>
+                                                       
+                                                        <div class="col-md-8">
+                                                            <div>{{topcontactos[0].nombre}}</div>                    
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                
+                                         
+                                            <a href="#main/contacto" class="list-group-item"
+                                                    data-ui-sref="main.contacto({nombreContacto:topcontactos[1].nombre,id:topcontactos[1].idContacto})" >
+                                                <div class="row">  
+                                                    <div class="col-md-2">
+                                                        <img src="{{topcontactos[1].imagen}}"   width="60px" height="70" align="center"></br>
+                                                    </div>
+                                                    <div class="col-md-2">                                                
+                                                        <div class="img_container"><h1 style="color:#848484;"><i class="fa fa-trophy" aria-hidden="true"></i>  </h1></div>
+                                                    </div>
+                                                  
+                                                    <div class="col-md-8">
+                                                        <div >{{topcontactos[1].nombre}}</div>                     
+
+                                                    </div>
+                                                </div>
+
+                                            </a>
+                                            <a href="#main/contacto" class="list-group-item"
+                                                    data-ui-sref="main.contacto({nombreContacto:topcontactos[2].nombre,id:topcontactos[2].idContacto})" >     
+                                                <div class="row"> 
+                                                    <div class="col-md-2">
+                                                        <img src="{{topcontactos[2].imagen}}"   width="60px" height="70" align="center"></br>
+                                                    </div>
+                                                    <div class="col-md-2">                                                
+                                                        <div class="img_container"><h1 style="color:#B18904;"><i class="fa fa-trophy " aria-hidden="true"></i>  </h1></div>
+                                                    </div>
+                                                   
+                                                    <div class="col-md-8">
+                                                        <div >{{topcontactos[2].nombre}}</div>                     
+
+                                                    </div>
+                                                </div>
+
+                                            </a>
+                                                                                         
+                                        </div>    
+
+                                    </div>    
+                                
+
+
+
+                                </div>
+                            </div>
+
+                    </div>                 
+
+                            
+                </div>
+
+                <div class="row contenedorAlineado" >
+                    <div class="col-md-6 contenidoAlineado" id="ventasRecientes">
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"> Últimas Ventas</h3>
+                            </div>
+                                <input type="text" class="form-control" placeholder="Buscar ventas recientes" ng-model="query">                            
+                            </br>
+                            <div class="list-group">
+                                <div>
+                                    <a href="#main/venta" data-ui-sref="main.venta({nombre:item.venta})"  class="list-group-item" dir-paginate="item in reciente | filter: query  | itemsPerPage:5 track by $index">
+                                        <h4 class="list-group-item-heading">{{item.fecha}} {{item.titulo}}  </h4>
+                                               Contacto: {{item.contacto}} </br> Venta: {{item.venta}}
+                                        <p class="list-group-item-text"> {{item.mensaje}}</p>
+                                    </a>
+                                </div>
+                                <div id="paginacion" >                        
+                                    <dir-pagination-controls
+                                        max-size="5"
+                                        direction-links="true"
+                                        boundary-links="true" >
+                                    </dir-pagination-controls>
+                                </div>                                                              
+                            </div>                               
+ 
+                        </div>
+
+                    </div >
+              
+                    <div class="col-md-6 contenidoAlineado" >
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Actividades de la Semana</h3>
+                            </div>
+                                <input type="text" class="form-control" placeholder="Buscar actividades recientes" ng-model="query2">                            
+                            </br>
+                                
+                            <div class="list-group">
+                                  <a href="#main/venta" data-ui-sref="main.venta({nombre:actividad.nombre})" ng-click="tipoPagVenta(actividad)" class="list-group-item" dir-paginate="actividad in actividadesProximas | filter: query2  | itemsPerPage:5 track by $index">
+                                            <h4 class="list-group-item-heading">{{actividad.dia}} </h4>
+                                            El {{actividad.dia}} {{actividad.fecha | date:"dd/MM/yyyy"}} a las {{actividad.hora  |  date:" hh: mm . a "}} se programó una {{actividad.tipo}} con {{actividad.contacto}} relacionada con la venta " {{actividad.nombre}} "
+                                  </a>
+
+
+
+                              
+                                <div id="paginacion2" >                        
+                                    <dir-pagination-controls
+                                        max-size="5"
+                                        direction-links="true"
+                                        boundary-links="true" >
+                                    </dir-pagination-controls>
+                                </div>                                                              
+                            </div>                               
+ 
+                        </div>
+
+
+            
+
+                    </div>
+
+                </div>
+
+
+
+
+<!--
+        <div class="row" >
+			<div class="col-md-3">
+	        	<div class="panel panel-blue">                          
+                    <div class="panel-body">		
+	                    <div class="row">
+							<section ng-init="tab = 1 " id="contenedorPestannias" >
+				                <ul class="nav nav-pills nav-stacked">
+				                    <li ng-class="{active:tab === 1}"><a href ng-click="tab = 1 ">Muro</a></li>                 
+				                    <li ng-class="{active:tab === 2}"><a href ng-click="tab = 2 ">Actividades Próximas</a></li> 
+				                </ul>
+				            </section>
+	                            	
+	                    </div>
+
+                    </div>
+                </div>
+	        </div>
+
+	        <div class="col-md-9">
+
+	        	<div class="panel" ng-show="tab === 1">     		
+	        		<div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"> Muro</h3>
+                            </div>
+                            <div class="panel-body">		
+	                            <div class="row">
+
+	                            	
+	                           	</div>				
+
+                            </div>
+                    </div>
+
+	        	</div>
+	        	<div class="panel" ng-show="tab === 2 ">
+
+	        		<div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"> Actividades Próximas</h3>
+                            </div>
+                            <div class="panel-body">		
+	                            <div class="row">
+	                            	
+
+	                            	<table  class="table letra-14" align="center">
+										<thead class="thead-inverse">
+											<tr>
+												<th class="col-md-2">Venta</th>
+												<th class="col-md-1">Tipo</th>
+												<th class="col-md-1">Fecha</th>
+												<th class="col-md-2">Hora</th>
+												<th class="col-md-3">Anotaciones</th>
+												<th class="col-md-1"></th>
+												<th class="col-md-1"></th>
+											</tr>
+										</thead>
+										<tbody>												
+											<tr ng-repeat="actividad in actividadesProximas" >
+												<td>{{ actividad.nombre  }}</td>
+												<td>{{ actividad.tipo}}</td>				
+												<td> {{ actividad.fecha | date:"dd/MM/yyyy" }}</td>	
+												<td>{{ actividad.hora | date : " hh . mm . a"}}</td>						
+												<td>  {{ actividad.duracion  }}</td>
+												<td>{{ actividad.anotaciones }}	</td>
+												<td>								
+													<button class="btn btn-success" ng-click="editarActividad(actividad)" data-toggle="modal" data-target="#modalEditarActividad">  <span class="glyphicon glyphicon-pencil"></span></button>
+												</td>
+												<td>
+													<button  class="btn btn-danger" data-toggle="modal" data-target="#confirm" ng-click="pasarActividad(actividad)" name="remove_levels" > <span class="glyphicon glyphicon-trash"></button>
+												</td>
+											</tr>	
+										</tbody>	
+									</table>	
+
+	                            	
+	                           	</div>				
+
+                            </div>
+                    </div>
+
+
+	        	</div>
+
+	        </div>
+	    </div>
+-->
+
+
+
+
+
+                                <!--
+                                    <div class="row">       
+                                       <div class="col-md-4">
+                                            </br>
+                                             <img src="{{topcontactos[1].imagen}}"   width="50px" height="60" align="center"></br>                 <div align="center">{{topcontactos[1].nombre}}</div>
+                                             <div class="img_container"><h1 ><i class="fa fa-trophy" aria-hidden="true" align="center" style="color:#848484;" ></i></h1></div>
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                              <img src="{{topcontactos[0].imagen}}" class="img-circle"  width="80" height="100" align="center"></br>                                                                            <div align="center">{{topcontactos[0].nombre}}</div>
+                   
+                                              <div class="img_container"><h1><i class="fa fa-trophy fa-2x" aria-hidden="true" style="color:#FFCC00;"></i></h1></div> 
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            </br>
+                                             <img src="{{topcontactos[2].imagen}}" class="img-circle"  width="80" height="100" align="center">                    <div align="center">{{topcontactos[2].nombre}}</div>
+  
+                                             <div class="img_container"><h1 ><i class="fa fa-trophy" aria-hidden="true" align="center" style="color:#B18904;" ></i></h1></div>
+
+                                        </div>
+
+                                    </div> 
+                                -->
+                                    
+
+
+
+
+<!--
+ <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalles</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+    -->

@@ -1,0 +1,434 @@
+<div>
+	<div class="row">
+		<div class="col-md-8">
+			<h1 class="page-header">Objetivos </h1>
+		</div>
+		<div class="col-md-4">
+			<button  type="button" class="btn blackButton btn-lg btn-block " data-toggle="modal" data-target="#modalAgregarObjetivo" ng-click="resetForm()">Agregar Objetivo</button>			
+		</div>
+	</div>
+
+	
+	    <section ng-init="tab = 1 " >
+             <ul class="nav nav-tabs">
+                <li ng-class="{active:tab === 1}"><a href ng-click="setTipoAsignacion(1)">Mis objetivos Personales</a></li>                 
+                <li ng-class="{active:tab === 2}"><a href ng-click="setTipoAsignacion(2) " >Objetivos Grupales</a></li> 
+                <li ng-class="{active:tab === 3}"><a href ng-click="setTipoAsignacion(3)" ng-if="tipoUsuario=='admin'">Objetivos Asignados a vendedores</a></li> <li ng-class="{active:tab === 3}"><a href ng-click="setTipoAsignacion(3)" ng-if="tipoUsuario!='admin'">Objetivos Asignados por el Gerente</a></li>
+            </ul>
+        </section>
+        <div class="tab-content">
+            <div class="panel"  ng-if="tab == 1">
+
+            	<div class="row">
+					<div class="col-md-8">
+						<h3>Mis Objetivos </h3>
+					</div>
+					<div class="col-md-4">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+			        	Filtrar por: 		  &nbsp;
+			        	<input type="radio"  ng-model="filtro" value="mes" ng-click= "filtroMes('personal',vendedorActual.user)"> Mes  
+			        	<input type="radio"  ng-model="filtro" value="annio" ng-click="filtroAnnio('personal',vendedorActual.user)"> Año  
+					</div>
+					<div class="col-md-8">
+					    <input type="radio"  ng-model="filtro" ng-click="enable()" value="personalizadoGrupo">		        
+					    Filtro Personalizado  
+
+					    <div ng-if="enableFiltro">
+					    	Mes:  <input type="text" name="radioMes" ng-model="filtroPersonalizado.mes"  required/>
+				        	Año : <input type="text" name="radioAnnio" ng-model="filtroPersonalizado.annio"  required/>	
+							<button name="botonFiltro" class="btn blackButton" ng-click="filtroPersonalizado('personal',vendedorActual.user)" ><i class="fa fa-filter" aria-hidden="true"></i></button>    
+					    </div>
+			        	
+
+					</div>  
+				</div>
+				</br>
+
+
+
+
+				<div class="row">
+				<div class="col-md-6">
+					<div ng-if="objetivos.vendedor.length==0">
+						No tienes objetivos registrados para este periodo de tiempo.
+					</div>
+						<table  class="table table-bordered letra-14" width="100%"  align="center" ng-if="objetivos.vendedor.length >0">				
+								<thead class="thead-inverse">
+									<tr>
+										<th class="col-md-4">Tipo</th>
+										<th class="col-md-2">Avance</th>
+										<th class="col-md-6">% </th>								
+														
+									</tr>	
+								</thead>						
+								<tbody>
+									<tr ng-repeat="objetivo in objetivos.vendedor track by $index">
+									<td> {{objetivo.tipo}} </td>								
+
+									<td ng-if="objetivo.tipo=='Contactos'">{{avanceContactos}} de {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Actividades'"> {{avanceActividades}} de  {{objetivo.cantidad}} </td>	
+									<td ng-if="objetivo.tipo=='Llamadas'">{{avanceLlamadas}} de {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Reuniones'">{{avanceReuniones}} de {{objetivo.cantidad}} </td>
+									<td ng-if="objetivo.tipo=='Comidas'">{{avanceComidas}} de {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Tareas'">{{avanceTareas}} de {{objetivo.cantidad}} </td>
+									<td ng-if="objetivo.tipo=='Totales de Ventas'">{{avanceTotalesVenta}} de  {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Negocios Ganados'">{{avanceNegociosGanados}} de {{objetivo.cantidad}}</td>
+
+
+									<td>									
+									
+										<progress>
+										    <bar value="objetivo.porcentaje" class="progress-striped" type="warning">{{objetivo.porcentaje}}</bar>
+										</progress>
+										
+											
+									</td>
+								</tr>	
+								</tody>										
+							</table>		
+
+					
+
+				</div>
+				<div class="col-md-6">
+		
+				</div>
+			</div>
+			
+
+            </div>
+             <div class="panel"  ng-if="tab == 2">
+              	<h3>Objetivos Grupales </h3>
+              	<div class="row">
+					<div class="col-md-4">
+			        	Filtrar por: 		  &nbsp;
+			        	<input type="radio"  ng-model="filtro" value="mes" ng-click= "filtroMes('grupo',grupoActual.idGrupo)"> Mes  
+			        	<input type="radio"  ng-model="filtro" value="annio" ng-click="filtroAnnio('grupo',grupoActual.idGrupo)"> Año  
+					</div>
+					<div class="col-md-8">
+					    <input type="radio"  ng-model="filtro" ng-click="enable()" value="personalizadoGrupo">		        
+					    Filtro Personalizado  
+
+					    <div ng-if="enableFiltro">
+					    	Mes:  <input type="text" name="radioMes" ng-model="filtroPersonalizado.mes"  required/>
+				        	Año : <input type="text" name="radioAnnio" ng-model="filtroPersonalizado.annio"  required/>	
+							<button name="botonFiltro" class="btn blackButton" ng-click="filtroPersonalizado('grupo',grupoActual.idGrupo)" ><i class="fa fa-filter" aria-hidden="true"></i></button>    
+					    </div>
+			        	
+
+					</div>  
+				</div>
+				</br>
+
+
+              	<div class="row">
+
+              		<div class="col-md-6" ng-if="tipoUsuario=='admin'">              			
+						<table  class="table table-bordered letra-14" width="100%"  align="center">										
+							<tbody>
+								<tr ng-repeat="grupo in grupos track by $index " ng-class="{'selected': grupo.idGrupo == selectedGrupo}">
+								<td style="cursor:pointer" ng-click="getObjetivoGerenteGrupo(grupo)" >{{grupo.nombre}} </td>	
+							</tr>	
+							</tody>										
+						</table>	
+              		</div>
+              		<div class="col-md-6">
+              				<h4>{{grupoActual.nombre}}	</h4>	
+							<div ng-if="objetivos.gerentegrupo.length==0">
+								No hay objetivos que mostrar para este Grupo.
+							</div>
+
+
+              				<table  class="table table-bordered letra-14" width="100%"  align="center" ng-if="objetivos.gerentegrupo.length > 0">				
+								<thead class="thead-inverse">
+									<tr>
+										<th class="col-md-4">Tipo</th>
+										<th class="col-md-2">Avance</th>
+										<th class="col-md-6"> % </th>								
+														
+									</tr>	
+								</thead>						
+								<tbody>
+									<tr ng-repeat="objetivo in objetivos.gerentegrupo track by $index">
+										<td> {{objetivo.tipo}} </td>	
+
+										<td ng-if="objetivo.tipo=='Contactos'">{{avanceContactos}} de {{objetivo.cantidad}}</td>
+										<td ng-if="objetivo.tipo=='Actividades'"> {{avanceActividades}} de  {{objetivo.cantidad}} </td>	
+										<td ng-if="objetivo.tipo=='Llamadas'">{{avanceLlamadas}} de {{objetivo.cantidad}}</td>
+										<td ng-if="objetivo.tipo=='Reuniones'">{{avanceReuniones}} de {{objetivo.cantidad}} </td>
+										<td ng-if="objetivo.tipo=='Comidas'">{{avanceComidas}} de {{objetivo.cantidad}}</td>
+										<td ng-if="objetivo.tipo=='Tareas'">{{avanceTareas}} de {{objetivo.cantidad}} </td>
+										<td ng-if="objetivo.tipo=='Totales de Ventas'">{{avanceTotalesVenta}} de  {{objetivo.cantidad}}</td>
+										<td ng-if="objetivo.tipo=='Negocios Ganados'">{{avanceNegociosGanados}} de {{objetivo.cantidad}}</td>
+										<td>	
+										
+											<progress>
+											    <bar value="objetivo.porcentaje" class="progress-striped" type="warning">{{objetivo.porcentaje}}</bar>
+											</progress>										
+												
+										</td>
+									</tr>	
+							
+
+								</tody>										
+							</table>		
+
+
+
+<!--
+            			<table class="table table-bordered letra-14" width="100%" align="center">
+							<tbody>										 		
+								<tr >
+									<td>{{objetivo.tipo}} </td>	
+									<td>{{objetivo.nombre}}</td>
+									<td>Nuevos Contactos:  2 de 10 
+
+										<div class="progress">
+										  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+										    <span class="sr-only">60% Complete (warning)</span>
+										  </div>
+										</div>
+
+										<div class="progress">
+										  <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+										    20%
+										  </div>
+										</div>
+
+										<div class="progress">
+										  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+										    <span class="sr-only">40% Complete (success)</span>
+										  </div>
+										</div>
+										<div class="progress">
+										  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+										    <span class="sr-only">20% Complete</span>
+										  </div>
+										</div>
+									</td>
+								</tr>	
+							</tbody>	
+						</table>
+-->
+              		</div>
+              	</div>
+
+
+            </div>
+            <div class="panel"  ng-if="tab == 3">
+				<h3 ng-if="tipoUsuario=='admin'">Objetivos por Vendedor </h3>
+				<h3 ng-if="tipoUsuario!='admin'">Objetivos Asignados por el Gerente </h3>
+
+				<div class="row">
+					<div class="col-md-4">
+			        	Filtrar por: 		  &nbsp;
+			        	<input type="radio"  ng-model="filtro" value="mes" ng-click= "filtroMes('vendedor',vendedorActual.user)"> Mes  
+			        	<input type="radio"  ng-model="filtro" value="annio" ng-click="filtroAnnio('vendedor',vendedorActual.user)"> Año  
+					</div>
+					<div class="col-md-8">
+					    <input type="radio"  ng-model="filtro" ng-click="enable()" value="personalizado">		        
+					    Filtro Personalizado  
+
+					    <div ng-if="enableFiltro">
+					    	Mes:  <input type="text" name="radioMes" ng-model="filtroPersonalizado.mes"  required/>
+				        	Año : <input type="text" name="radioAnnio" ng-model="filtroPersonalizado.annio"  required/>	
+							<button name="botonFiltro" class="btn blackButton" ng-click="filtroPersonalizado('vendedor',vendedorActual.user)" ><i class="fa fa-filter" aria-hidden="true"></i></button>    
+					    </div>
+			        	
+
+					</div>  
+				</div>
+				</br>
+
+			
+				<div class="row">
+					<div class="col-md-6" ng-if="tipoUsuario=='admin'">	
+						
+			
+	                   
+							<table  class="table table-bordered letra-14" width="100%"  align="center">										
+								<tbody>
+									<tr ng-repeat="vendedor in vendedores track by $index"  ng-class="{'selected': vendedor.user == selectedVendedor}">
+									<td style="cursor:pointer" ng-click="getObjetivosGerenteVendedor(vendedor)">{{vendedor.nombre}} </td>	
+								</tr>	
+								</tody>										
+							</table>		                   
+					</div>
+					<div class="col-md-6">
+						<h4> {{vendedorActual.nombre}} </h4>
+							<div ng-if="objetivos.gerentevendedor.length==0">
+								No hay objetivos que mostrar para este Vendedor.
+							</div>
+							<table  class="table table-bordered letra-14" width="100%"  align="center" ng-if="objetivos.gerentevendedor.length>0">				
+								<thead class="thead-inverse">
+									<tr>
+										<th class="col-md-4">Tipo</th>
+										<th class="col-md-2">Avance</th>
+										<th class="col-md-6">%</th>								
+														
+									</tr>	
+								</thead>						
+								<tbody>
+									<tr ng-repeat="objetivo in objetivos.gerentevendedor track by $index" >																			
+									<td> {{objetivo.tipo}} </td>
+									<td ng-if="objetivo.tipo=='Contactos'">{{avanceContactos}} de {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Actividades'"> {{avanceActividades}} de  {{objetivo.cantidad}} </td>	
+									<td ng-if="objetivo.tipo=='Llamadas'">{{avanceLlamadas}} de {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Reuniones'">{{avanceReuniones}} de {{objetivo.cantidad}} </td>
+									<td ng-if="objetivo.tipo=='Comidas'">{{avanceComidas}} de {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Tareas'">{{avanceTareas}} de {{objetivo.cantidad}} </td>
+									<td ng-if="objetivo.tipo=='Totales de Ventas'">{{avanceTotalesVenta}} de  {{objetivo.cantidad}}</td>
+									<td ng-if="objetivo.tipo=='Negocios Ganados'">{{avanceNegociosGanados}} de {{objetivo.cantidad}}</td>
+
+
+									<td>									
+									
+										<progress>
+										    <bar value="objetivo.porcentaje" class="progress-striped" type="warning">{{objetivo.porcentaje}}</bar>
+										</progress>
+										
+											
+									</td>
+								</tr>					
+
+
+								</tody>									
+							</table>			
+	
+
+
+								
+
+
+
+
+
+
+					</div>
+				</div>
+
+            </div>
+        </div>
+
+
+</div>
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalAgregarObjetivo" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+							<h1>Agregar un nuevo Objetivo</h1>	
+							<form name="productosForm" novalidate			
+							ng-submit=" agregarObjetivo()" >
+								</br>
+								<div class="row">
+									<div class="col-md-6">
+										Tipo:</br>
+										 <select class="form-control" id="sel2" ng-model="NuevoObjetivo.tipo">
+										    <option>Contactos</option>
+										    <option>Actividades</option>	
+										    <option>Llamadas</option>	
+										    <option>Reuniones</option>	
+										    <option>Comidas</option>	
+										    <option>Negocios Ganados</option>	
+										    <option>Totales de Ventas</option>			      
+										</select>
+										<div class="errorMensaje" >{{errores.errorTipo}}</div>
+										</br>
+										Cantidad:
+										<input ng-model="NuevoObjetivo.cantidad" class="form-control" required/>
+										<div class="errorMensaje" >{{errores.errorCantidad}}</div>
+										</br>
+										<input type="radio"  ng-model="rangoObjetivo" value="mes"> Objetivo Mensual 
+										<input type="radio"  ng-model="rangoObjetivo" value="annio"> Objetivo Anual 
+
+
+										<input id="expiry" name="expiry" type="month" class="form-control" required ng-model="NuevoObjetivo.mes" ng-if="rangoObjetivo=='mes'"></br>
+										<div class="errorMensaje" ng-if="rangoObjetivo=='mes' ">{{errores.errorMes}}</div>
+
+   										<input id="expiry" name="expiry" type="year" class="form-control" required ng-model="NuevoObjetivo.annio" ng-if="rangoObjetivo=='annio'"></br>
+										<div class="errorMensaje" ng-if="rangoObjetivo=='annio' ">{{errores.errorAnnio}}</div>
+
+
+									<!--	Fecha Inicio:
+										<input type="date" value="{{NuevoObjetivo.fechaInicio}}" class="form-control" ng-model="NuevoObjetivo.fechaInicio" required />
+										<div class="errorMensaje" >{{errores.errorFechaInicio}}</div>
+										Fecha Terminación:
+										<input type="date" value="{{NuevoObjetivo.fechaTerminacion}}" class="form-control" ng-model="NuevoObjetivo.fechaTerminacion" required />
+										<div class="errorMensaje" >{{errores.errorFechaTerminacion}}</div>									
+									-->
+										Anotaciones: </br>
+										<textarea class="form-control" rows="5" ng-model="NuevoObjetivo.anotaciones"></textarea>
+										<div class="errorMensaje">{{errores.errorAnotaciones}}</div></br>				
+										<div class="errorMensaje">{{errorObjetivo}}</div></br>
+									</div>
+
+									<div class="col-md-6">
+
+										<div ng-if="tipoAsignacion=='Grupal' && tipoUsuario=='admin' ">
+											Asignar Grupos </br>
+				        				    <input type="checkbox" ng-model="checkTodos" ng-click="seleccionarTodos(1)">Seleccionar todos 
+							        			<table  class="table table-bordered letra-14" width="50%"  align="center"style="height:100px;">										
+												 	<tbody>
+												 		<tr ng-repeat="grupo in grupos track by $index">
+															<td> <input type="checkbox" ng-model="grupo.isSelected">	</td>
+															<td>{{grupo.nombre}} </td>	
+														</tr>	
+													</tbody>										
+												</table>	
+												<div class="errorMensaje">{{errores.erroGrupos}}</div></br>				
+
+												
+							        	</div>
+							        	<div ng-if="tipoAsignacion =='Individual' && tipoUsuario =='admin'" class="hidden-scrollbar" >
+							        			Asignar Vendedores </br>
+					        				    <input type="checkbox" ng-model="checkTodos2" ng-click="seleccionarTodos(2)">Seleccionar todos
+
+							        			<table  class="table table-bordered letra-14" width="50%"  align="center">
+												
+												 	<tbody>
+												 		<tr dir-paginate="vendedor in vendedores | itemsPerPage:10">
+															<td> <input type="checkbox" ng-model="vendedor.isSelected">	</td>
+															<td>{{vendedor.nombre}} </td>	
+														</tr>	
+													</tbody>										
+												</table>	
+
+												<div id="paginacion3" >
+								
+												   <dir-pagination-controls
+												       max-size="5"
+												       direction-links="true"
+												       boundary-links="true" >
+												    </dir-pagination-controls>
+												</div>
+
+												<div class="errorMensaje">{{errores.errorVendedores}}</div></br>				
+
+			        		
+					        			</div>
+									</div>
+								</div>
+
+							
+								<button class="btn blackButton btn-lg btn-block" type="submit">Agregar Objetivo</button>    
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>	  
+	
+
+
+
+

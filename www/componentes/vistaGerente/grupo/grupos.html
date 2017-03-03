@@ -1,0 +1,81 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<div  id="fullcontenido">
+	<div class="row">
+		<div class="col-md-8">
+			<h1 class="page-header">Mis Grupos   </h1>
+		</div>
+		<div class="col-md-4">
+			<button  type="button" class="btn blackButton btn-lg btn-block " data-toggle="modal" data-target="#modalAgregarGrupo">Agregar Grupo</button>			
+		</div>
+	</div>
+
+		<table  class="table letra-14" width="50%"  align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-3"></th>
+								<th class="col-md-9"></th>		
+							</tr>	
+						</thead>
+					 	<tbody>
+					 		<tr dir-paginate="grupo in grupos | filter:query | itemsPerPage:5" href="#main/grupo" data-ui-sref="main.grupo({nombre:grupo.nombre,idGrupo:grupo.idGrupo})"
+							 style="cursor:pointer">
+								<td><img src="http://localhost/angular/template/server/php/files/Unknown_Person.png"   width="50" height="60" align="center"></td>
+								<td><h2>{{grupo.nombre}}</h2><small>{{grupo.descripcion}}</small> </td>	
+							</tr>	
+						</tbody>										
+	</table>	
+
+
+
+
+	<div class="row">
+		<div id="paginacion" class="col-md-12 col-sm-12 col-xs-12">						
+					   <dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
+		</div>				
+	</div>
+	
+
+
+</div>
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalAgregarGrupo" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+							<h1>Agregar un nuevo Grupo</h1>	
+							<form name="productosForm" novalidate			
+							ng-submit=" agregarGrupo()" >
+								</br>
+								Nombre:</br>
+								<input ng-model="NuevoGrupo.nombre" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorNombre}}</div>
+							
+								Descripción: </br>
+								<textarea class="form-control" rows="5" ng-model="NuevoGrupo.descripcion"></textarea>
+								<div class="errorMensaje">{{errores.errorDescripcion}}</div></br>								
+
+							
+								<button class="btn blackButton btn-lg btn-block" type="submit">Agregar Grupo</button>    
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>	  
+	
+
+
+
+	<!--Fin del Modal-->
+
+

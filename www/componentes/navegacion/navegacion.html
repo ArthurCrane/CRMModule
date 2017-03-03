@@ -1,0 +1,181 @@
+
+  <div id="wrapper">            
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="navegacionController">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#home">
+
+                            Namakili</a>
+                    </div>
+                    <!-- Top Menu Items -->
+                    <ul class="nav navbar-right top-nav">
+                    
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu scrollable-menu"  role="menu"  >
+                                <li ng-repeat="notificacion in notificaciones" >
+                                    <a href="#main/venta" data-ui-sref="main.venta({nombre:notificacion.nombre})" ng-click="tipoPagVenta(notificacion)" > 
+                                        <div class="row">
+                                            <div class="col-md-2">                                  
+                                                <i class="fa fa-tasks fa-3x" aria-hidden="true" style="color:#353d47;"> </i>
+                                            </div>
+                                             <div class="col-md-10">
+                                                Hoy tienes una {{notificacion.tipo}} con {{notificacion.contacto}} a las {{notificacion.hora |  date:" hh: mm . a "}} relacionada a la venta
+                                               " {{notificacion.nombre}} " . </br>
+                                               <div style="color:#353d47;"> Click para Ver Actividad</div>                                                
+
+                                            </div>
+                                        </div>
+                                    </a>                                                               
+
+                                </li>
+                                <li ng-repeat="notificacion in notificacionesCumpleanios">
+                                    <a href="#main/contacto" 
+                                    data-ui-sref="main.contacto({nombreContacto:notificacion.nombreContacto,id:notificacion.idContacto})" > 
+                                        <div class="row">
+                                            <div class="col-md-2">   
+                                                <i class="fa fa-birthday-cake fa-3x" aria-hidden="true" style="color:#353d47;"></i>                               
+                                            </div>
+                                             <div class="col-md-10">
+                                                Hoy es el Cumpleaños de {{notificacion.nombreContacto}}  </br>
+                                                No olvides realizar una llamada de felicitación !!!     </br>                                        
+                                                <div style="color:#353d47;"> Click para ver Perfil de Contacto</div> 
+                                            </div>
+                                        </div>
+                                    </a>                                                               
+
+                                </li>
+                                 <li ng-repeat="notificacion in notificacionesObjetivos.gerente">
+                                    <a href="#main/objetivosGerente"  > 
+                                        <div class="row">
+                                            <div class="col-md-2">   
+                                                <i class="fa fa-list fa-3x" aria-hidden="true" style="color:#353d47;"></i>                               
+                                            </div>
+                                             <div class="col-md-10">
+                                                Se agregó un Nuevo Objetivo de Gerente. </br> 
+                                                Tipo: {{notificacion.tipo}}  Cantidad: {{notificacion.cantidad}} </br> 
+                                                {{notificacion.fechaInicio | date:'dd/MM/yyyy' }} - {{notificacion.fechaTerminacion | date:'dd/MM/yyyy'}}
+             
+                                                <div style="color:#353d47;"> Click para ver Objetivos </div> 
+                                            </div>
+                                        </div>
+                                    </a>                                                               
+
+                                </li>
+                                <li ng-repeat="notificacion in notificacionesObjetivos.grupales">
+                                    <a href="#main/objetivosGerente"  > 
+                                        <div class="row">
+                                            <div class="col-md-2">   
+                                                <i class="fa fa-list fa-3x" aria-hidden="true" style="color:#353d47;"></i>                               
+                                            </div>
+                                             <div class="col-md-10">
+                                                Se agregó un Nuevo Objetivo Grupal. </br> 
+                                                Tipo: {{notificacion.tipo}}  Cantidad: {{notificacion.cantidad}} </br> 
+                                                {{notificacion.fechaInicio | date:'dd/MM/yyyy' }} - {{notificacion.fechaTerminacion | date:'dd/MM/yyyy'}}
+                                                                          
+                                               <div style="color:#353d47;">  Click para ver Objetivos </div> 
+                                            </div>
+                                        </div>
+                                    </a>                                                              
+
+                                </li>
+                                <li ng-repeat="notificacion in notificacionesObjetivos.personales">
+                                    <a href="#main/objetivosGerente"  > 
+                                        <div class="row">
+                                            <div class="col-md-2">   
+                                                <i class="fa fa-list fa-3x" aria-hidden="true" style="color:#353d47;"></i>                               
+                                            </div>
+                                             <div class="col-md-10">
+                                                Se agregó un Nuevo Objetivo Personal. </br> 
+                                                Tipo: {{notificacion.tipo}}  Cantidad: {{notificacion.cantidad}} </br> 
+                                               {{notificacion.fechaInicio | date:'dd/MM/yyyy' }} - {{notificacion.fechaTerminacion | date:'dd/MM/yyyy'}}
+
+                                                                          
+                                                <div style="color:#353d47;"> Click para ver Objetivos </div> 
+                                            </div>
+                                        </div>
+                                    </a>                                                              
+
+                                </li>
+
+
+
+                                
+                               
+                               
+                               
+                            </ul>
+                        </li>
+                       
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user}} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#main/perfil"><i class="fa fa-fw fa-user"></i>  Perfil</a>
+                                </li>
+                               
+                                <li>
+                                    <a href="#main/configuracion"><i class="fa fa-fw fa-gear"></i>  Configuración </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li> <a href="" ng-click="this.cerrarSession($event)" > <span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav side-nav">
+                              <li>
+                                <a href="#main/tablero"><i class="fa fa-fw fa-dashboard"></i>  Tablero</a>
+                            </li>
+                            <li>
+                                <a href="#main/negocios"><i class="fa fa-fw fa-briefcase"></i>  Negocios en curso</a>
+                            </li>
+                            <li>
+                                <a href="#main/ventas"><i class="fa fa-fw fa-check"></i>  Ventas</a>
+                            </li>
+                            <li>
+                                <a href="#main/productos"><i class="fa fa-fw fa-cubes"></i>  Productos</a>
+                            </li>
+                            <li>
+                                <a href="#main/contactos"><i class="fa fa-fw fa-user"></i>  Contactos</a>
+                            </li>
+                            <li>
+                                <a href="#main/estadisticas"><i class="fa fa-fw fa-bar-chart-o "></i>  Estadísticas</a>
+                            </li>
+                            <li>
+                                <a href="#main/objetivosGerente"><i class="fa fa-fw fa-edit"></i>  Objetivos</a>
+                            </li>
+                                             
+                            <li ng-if="tipoUsuario=='admin'">
+                                <a href="#main/grupos"><i class="fa fa-fw fa-users"></i>  Grupos</a>
+                            </li>
+                            <li>
+                                <a href="#main/configuracion"><i class="fa fa-fw fa-cog"></i>  Configuracion</a>
+                            </li>   
+                            <li ng-if="tipoUsuario=='admin'">
+                                <a href="#main/asignaciones" ><i class="fa fa-fw fa-tasks"></i> Asignaciones</a>
+                            </li>
+                         
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+    </nav>
+
+
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div ui-view ="content" id="contenido" class="col-xs-12 col-md-12"></div>
+                </div>
+              
+            </div>
+
+        </div>

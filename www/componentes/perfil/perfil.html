@@ -1,0 +1,58 @@
+	<h1>Perfil de Usuario</h1>
+
+	</br>
+
+		
+</br>
+
+
+	<div class="row">
+		<div id="contenidoImagen"  style="display:none">	
+
+			<div class="col-md-5">			
+				<img src="{{usuario.imagen}}"  width="220" height="240" align="center">
+				<input id="fileupload" type="file" name="files[]" data-url="server/php/">
+			</div>
+			</br>
+		</div>
+		
+		<div class="col-md-7">
+
+			<h4>Cambiar datos de usuario:</h4>
+	
+			Nombre: <input ng-model="usuario.nombre" class="form-control" value="{{usuario.nombre}}" required/>
+			</br>
+			<div class="errorMensaje" >{{errorNombre}}</div>
+			<div ng-if="configUsuario.fechaNacimiento==true">
+				Fecha Nacimiento: <input type="date" value="{{usuario.fechaNacimiento}}" class="form-control" ng-model="usuario.fechaNacimiento" required />
+			</div>
+			</br>
+			<div class="errorMensaje" >{{errorFechaNacimiento}}</div>
+
+			Correo: <input ng-model="usuario.mail" class="form-control" required/>
+			</br>
+			<div class="errorMensaje" >{{errorCorreo}}</div>
+
+
+			<button class="btn blackButton btn-lg btn-block"  ng-click="actualizarUsuario()" >Actualizar Perfil</button>   
+			</br></br>
+
+
+			<h4>Cambiar Contraseña:</h4></br>
+
+			Contraseña Nueva:</br>
+			<input ng-model="contraNueva" type="password" class="form-control" required/>
+			Confirmar Contraseña:</br>
+			<input ng-model="contraConfirmacion" type="password" class="form-control" required/>
+			</br></br>
+			<button class="btn blackButton btn-lg btn-block"  ng-click="cambiarContrasenia()">Cambiar Contraseña</button>   
+			<div class="errorMensaje">{{errorContrasenia}}</div>
+
+		</div></br>
+
+	</br></br>
+	
+	</div></br>
+
+
+

@@ -1,0 +1,201 @@
+<div ng-controller="configuracionController">
+	<div id="fullcontenido" >
+
+		<h1 class="page-header">
+		       	Configuración      	
+		</h1>
+		<div class="row">
+			<div class="col-md-3">
+				<section ng-init="tab = 1 " >
+	                <ul class="nav nav-pills nav-stacked">
+	                    <li ng-class="{active:tab === 1}"><a href ng-click="tab = 1 ">Contactos</a></li>                 
+	                    <li ng-class="{active:tab === 2}"><a href ng-click="tab = 2 ">Productos</a></li> 
+	                    <li ng-class="{active:tab === 3}"><a href ng-click="tab = 3 ">Ventas</a></li> 
+	                    <li ng-class="{active:tab === 4}"><a href ng-click="tab = 4 ">Usuario</a></li>
+	                </ul>
+	            </section>
+	        </div>
+			<div class="col-md-9">
+				<div class="row">
+            		<div class="panel" ng-show="tab === 1">
+            			<h2>Contactos</h2>
+            			Selecciona los campos de contactos que deseas mostrar
+            		</br></br>
+            			<form name="configuracionClientesForm" novalidate			
+							ng-submit=" configurarClientes()" >
+			            	<table class="table">						
+							  <tbody>
+							    <tr>
+							     	<td>
+							     		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.puesto">Puesto</label>
+										</div>
+									</td>
+							      	<td>	
+							      		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.domicilio">Domicilio</label>
+										</div></td>						
+							    </tr>
+							    <tr>
+							      	<td>					      		
+							      		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.nombreSecretaria">Nombre Secretaria</label>
+										</div>
+							      	</td>
+							     	<td>	
+							     		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.telefonoSecretaria">Teléfono Secretaria</label>
+										</div>
+									</td>						     	
+							    </tr>		
+							      <tr>
+							      	<td>	
+							      		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.telefonoOficina">Teléfono Oficina</label>
+										</div></td>						     
+							     	<td>	
+							     		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.hobbies">Hobbies</label>
+										</div>
+									</td>
+							     	
+							    </tr>	
+							      <tr>
+							      	<td>	
+							      		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.anotaciones">Anotaciones</label>
+										</div></td>						     	
+							     	<td>
+							     		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.preferencias">Preferencias</label>
+										</div>
+							     	</td>
+							    </tr>	
+							      <tr>
+							      	<td>	
+							      		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.estadoCivil">Estado Civil</label>
+										</div></td>						     	
+							    	<td>
+							    		<div class="checkbox">
+	  										<label><input type="checkbox"  ng-model="configClientes.personalidad">Personalidad</label>
+										</div>
+							    	</td>
+							    </tr>					   
+							  </tbody>
+							</table>
+							<button class="btn blackButton btn-lg btn-block" type="submit">Guardar Cambios</button>
+						</form> 
+
+            		</div>
+            		<div class="panel" ng-show="tab === 2">
+            			<h2>Productos</h2>
+            			Selecciona los campos de productos que deseas mostrar en el sistema
+            		</br></br>
+            			<form name="configuracionProductosForm" novalidate			
+							ng-submit="configurarProductos()" >
+			            	<table class="table">						
+								<tbody>
+								    <tr>
+								     	<td>
+								     		<div class="checkbox">
+		  										<label><input type="checkbox"  ng-model="configProductos.existencias">Existencias</label>
+											</div>
+										</td>						      				
+								    </tr>
+								    <tr>
+								      	<td>					      		
+								      		<div class="checkbox">
+		  										<label><input type="checkbox" ng-model="configProductos.propiedades">Propiedades</label>
+											</div>
+								      	</td>	
+								    </tr>  
+								    <tr>
+								     	<td>					      		
+								      		<div class="checkbox">
+		  										<label><input type="checkbox" ng-model="configProductos.imagen">Imagen</label>
+											</div>
+								      	</td>	
+								    </tr>
+								  
+						     	</tbody>
+							</table></br></br>
+							<button class="btn blackButton btn-lg btn-block" type="submit">Guardar Cambios</button>
+						</form>
+            		</div>
+            		<div class="panel" ng-show="tab === 3">
+            			<h2>Ventas</h2>
+            			Selecciona los campos de ventas que deseas mostrar en el sistema
+            			
+
+            			</br></br>
+						<form name="configuracionProductosForm" novalidate			
+							ng-submit="configurarVenta()" >
+			            	<table class="table">						
+								<tbody>
+								    <tr>
+								     	<td>
+								     		<div class="checkbox">
+		  										<label><input type="checkbox"  ng-model="configVentas.descuento">Descuento</label>
+											</div>
+										</td>						      				
+								    </tr>		
+
+						     	</tbody>
+							</table>
+							</br></br>
+							<button class="btn blackButton btn-lg btn-block" type="submit">Guardar Cambios</button>
+						</form>
+						</br></br>
+            		</div>
+
+            		<div class="panel" ng-show="tab === 4">
+            			<h2>Usuario</h2>
+            			Selecciona los campos de usuario que deseas mostrar en el sistema
+            			
+
+            			</br></br>
+						<form name="configuracionUsuarioForm" novalidate			
+							ng-submit="configurarUsuario()" >
+			            	<table class="table">						
+								<tbody>
+								    <tr>
+								     	<td>
+								     		<div class="checkbox">
+		  										<label><input type="checkbox"  ng-model="configUsuario.imagen">Imagen</label>
+											</div>
+										</td>						      				
+								    </tr>		
+								    <tr>
+								     	<td>
+								     		<div class="checkbox">
+		  										<label><input type="checkbox"  ng-model="configUsuario.fechaNacimiento">Fecha Nacimiento</label>
+											</div>
+										</td>						      				
+								    </tr>						   
+						     	</tbody>
+							</table>
+							</br></br>
+							<button class="btn blackButton btn-lg btn-block" type="submit">Guardar Cambios</button>
+						</form>
+						</br></br>
+            		</div>
+
+
+
+
+
+            	</div>
+
+
+			</div>	
+		</div>
+
+
+
+
+
+
+	</div>
+</div>
+

@@ -1,0 +1,178 @@
+<div  id="fullcontenido">
+	<div class="row">
+		<div class="col-lg-9 col-md-8 col-sm-6">
+			<h1>{{grupo.nombre}} </h1>
+
+			
+		</div>
+		<div class="col-lg-3 col-md-4 col-sm-6">
+		</br>
+			
+			<button  type="button" class="btn blackButton" data-toggle="modal" data-target="#modalEditarGrupo" ng-click="setGrupoAModificar()"><span><i class="fa fa-pencil"></i> Editar 
+			</span></button>	
+
+			<button  type="button" class="btn blackButton"  data-toggle="modal" data-target="#confirm1"  ><span><i class="fa fa-trash-o" aria-hidden="true" ></i>  Borrar 
+			</span></button>
+			
+		</div>
+	</div>
+	{{grupo.descripcion}}
+
+
+	<hr style="color: #0056b2;" />
+
+
+	<div class="row">
+			<h3>Integrantes</h3>					
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-5 col-md-2 col-sm-2">
+		</div>
+		<div class="col-lg-2 col-md-4 col-sm-3">
+		    <input type="checkbox" ng-model="checkTodos" ng-click="seleccionarTodos()">Seleccionar todos
+		</div>
+		<div class="col-lg-5 col-md-6 col-sm-7">
+			<button  type="button" class="btn blackButton" data-toggle="modal" data-target="#confirm2" ><span><i class="fa fa-trash-o"></i>  Borrar Selección
+			</span></button>
+			<button  type="button" class="btn blackButton"  data-toggle="modal" data-target="#modalAgregarIntegrantes" ><i class="fa fa-plus-circle" aria-hidden="true"></i>  Agregar Integrantes
+			</button>	
+				
+		</div>	
+	</div>
+	
+	<table  class="table letra-14" width="50%"  align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-1"></th>
+								<th class="col-md-3"></th>
+								<th class="col-md-5"></th>		
+								<th class="col-md-3"></th>					
+							</tr>	
+						</thead>
+					 	<tbody>
+					 		<tr ng-repeat="vendedor in vendedores track by $index">
+								<td> <input type="checkbox" ng-model="vendedor.isSelected">	</td>
+								<td><img src="http://localhost/angular/template/server/php/files/Unknown_Person.png"   width="50" height="60" align="center"></td>
+								<td>{{vendedor.nombre}} </td>	
+								<td>{{vendedor.user}}</td>							
+							</tr>	
+						</tbody>										
+	</table>	
+
+
+</div>
+
+	<div class="modal fade" id="confirm1" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+					  <div class="modal-body">
+					    ¿Estás seguro de que quieres eliminar el grupo {{grupo.nombre}}?
+					  </div>
+					  <div class="modal-footer">
+					    <button type="button" data-dismiss="modal" ng-click="borrarGrupo()" class="btn " id="delete">Sí</button>
+					    <button type="button" data-dismiss="modal" class="btn">No</button>
+					  </div>
+					</div>
+				</div>
+		</div>
+
+
+		<div class="modal fade" id="confirm2" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+					  <div class="modal-body">
+					    ¿Estás seguro de que quieres eliminar del grupo los los usuarios seleccionados?
+					  </div>
+					  <div class="modal-footer">
+					    <button type="button" data-dismiss="modal" ng-click="borrarVendedores()" class="btn " id="delete">Sí</button>
+					    <button type="button" data-dismiss="modal" class="btn">No</button>
+					  </div>
+					</div>
+				</div>
+		</div>
+
+
+
+
+		
+
+
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalEditarGrupo" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+							<h1>Editar Grupo</h1>	
+							<form novalidate			
+							ng-submit=" modificarGrupo()" >
+								</br>
+								Nombre:</br>
+								<input ng-model="grupoAModificar.nombre" class="form-control" required/>
+								<div class="errorMensaje" >{{errores.errorNombre}}</div>
+								
+								Descripción: </br>
+								<textarea class="form-control" rows="5" ng-model="grupoAModificar.descripcion"></textarea>
+								<div class="errorMensaje" >{{errores.errorDescripcion}}</div>
+
+								</br>
+								<button class="btn blackButton btn-lg btn-block" type="submit">Guardar Cambios</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>	  
+	
+	<!--Fin del Modal-->
+
+		<!--Inicio del modal -->
+		<div class="modal fade" id="modalAgregarIntegrantes" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+							<h1>Agregar Integrantes</h1>	
+							Selecciona los vendedores que deseas integrar al grupo.
+							<form novalidate			
+							ng-submit=" agregarVendedores()" >
+								</br>
+		  					  <input type="checkbox" ng-model="checkTodos2" ng-click="seleccionarTodos2()">Seleccionar todos
+		  						</br>
+								<table  class="table letra-14" width="50%"  align="center">
+									<thead class="thead-inverse">
+										<tr>
+											<th class="col-md-1"></th>
+											<th class="col-md-4"></th>		
+											<th class="col-md-4"></th>					
+										</tr>	
+									</thead>
+								 	<tbody>
+								 		<tr ng-repeat="vendedor in vendedoresSinGrupo track by $index">
+											<td> <input type="checkbox" ng-model="vendedor.isSelected">	</td>											
+											<td>{{vendedor.nombre}} </td>	
+											<td>{{vendedor.user}}</td>							
+										</tr>	
+									</tbody>										
+								</table>	
+											
+
+								<button class="btn blackButton btn-lg btn-block" type="submit">Agregar</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>	  
+	
+	<!--Fin del Modal-->
+
