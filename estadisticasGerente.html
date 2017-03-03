@@ -1,0 +1,18 @@
+<div ng-controller="estadisticasGerenteController">
+	<div id="contenidoEstadisticas">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>Estadísticas</h2>
+			</div>
+			<div class="panel-body">
+			<h3>Estadísticas Individuales</h3>	
+
+			<div ng-repeat="vendedor in vendedores">
+				{{vendedor.nombre}}
+			</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>

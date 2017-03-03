@@ -1,0 +1,24 @@
+<div ng-controller="configuracionController">
+	<div id="contenidoContactos" >
+
+		<h1 class="page-header">
+		       	Configuración      	
+		</h1>
+		<div>
+			<section ng-init="tab = 1 " >
+                <ul class="nav nav-pills">
+                    <li ng-class="{active:tab === 1}"><a href ng-click="tab = 1 ">Clientes</a></li>                 
+                    <li ng-class="{active:tab === 2}"><a href ng-click="tab = 2 ">Productos</a></li> 
+                    <li ng-class="{active:tab === 3}"><a href ng-click="tab = 3 ">Rechazadas</a></li> 
+                </ul>
+            </section>
+		</div>
+
+
+
+
+
+
+	</div>
+</div>
+

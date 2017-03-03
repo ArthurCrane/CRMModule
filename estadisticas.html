@@ -1,0 +1,290 @@
+<div ng-controller="estadisticasController">
+	<div id="contenidoEstadisticas">
+		<h1 class="page-header">Estadísticas</h1>
+		
+		<label>
+		    <input type="radio"  ng-model="filtro" value="mes" >
+		    Mes
+		</label>
+		<label>
+		    <input type="radio"  ng-model="filtro" value="annio" checked="checked">
+		    Año
+		</label><br/>
+
+		
+	  	<div ng-if="filtro == 'annio'">
+			<div class="row" ng-if="filtro == 'annio'">
+				<div class="col-md-6">
+					<div class="panel panel-primary">
+			            <div class="panel-heading">
+			            	<div class="row">
+			                    <div class="col-xs-3">
+			                        <i class="fa fa-check fa-5x"></i>
+			                    </div>
+			                    
+				                <div class="col-xs-9 text-right">			                  
+			            			<h4>Negocios Ganados </h4>
+									{{ventasCerradasGanadas.cont}} Negocios <span class="glyphicon glyphicon-chevron-right"></span> $ {{ventasCerradasGanadas.total}}	
+				                </div>
+				        	</div>      
+			            </div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-red">
+			            <div class="panel-heading">
+			            	<div class="row">
+			                    <div class="col-xs-3">
+			                        <i class="fa fa-times fa-5x"></i>
+			                    </div>
+				                <div class="col-xs-9 text-right">
+				                    <h4>Negocios Perdidos</h4>
+									{{ventasCerradasPerdidas.cont}} Negocios <span class="glyphicon glyphicon-chevron-right"></span>  $ {{ventasCerradasPerdidas.total}}
+				                </div>
+				            </div>          	
+						</div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-gray">
+			            <div class="panel-heading">
+
+	        	
+							<h4>Actividades Completadas</h4>
+							<h4><span class="glyphicon glyphicon-earphone"></span>   {{actividadesCompletadas[1].cont }}   Llamadas</h4> 
+							<h4><i class="fa fa-users"></i> {{actividadesCompletadas[2].cont}}    Reuniones</h4>
+							<h4><i class="fa fa-coffee"></i>  {{actividadesCompletadas[0].cont}}   Comidas</h4>
+							<h4><span class="glyphicon glyphicon-dashboard"></span>{{actividadesCompletadas[3].cont}}   Tareas</h4>	
+
+			            </div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-gray">
+			            <div class="panel-heading">
+			            	<h4>Actividades por Cumplir</h4>
+							<h4> <span class="glyphicon glyphicon-earphone"></span>   {{actividadesPorCumplir[1].cont }}   Llamadas</h4> 
+							<h4><h4><i class="fa fa-users"></i></span>   {{actividadesPorCumplir[2].cont }}   Reuniones</h4>
+							<h4><i class="fa fa-coffee"></i></span>   {{actividadesPorCumplir[0].cont }}   Comidas</h4>
+							<h4><span class="glyphicon glyphicon-dashboard"></span>   {{actividadesPorCumplir[3].cont }}   Tareas</h4> 	
+			            </div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Totales de Venta       	
+
+			            </div>
+
+			            <div class="panel-footer">
+			            	<div google-chart chart="chartObject" style="height:300px; width:100%;"></div>
+			            </div>
+		        	</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Nuevos contactos   	
+			            </div>
+			            <div class="panel-footer">
+							<div google-chart chart="chartObject4" style="height:300px; width:100%;"></div>							
+			            </div>
+		        	</div>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Actividades Completadas
+			            </div>
+			            <div class="panel-footer">
+							<div google-chart chart="chartObject3" style="height:300px; width:100%;"></div>							
+			            </div>
+		        	</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Negocios Ganados  	
+
+			            </div>
+
+			            <div class="panel-footer">
+			            	<div google-chart chart="chartObject2" style="height:300px; width:100%;"></div>
+			            </div>
+		        	</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+
+
+		<div ng-if="filtro=='mes'">
+
+			<div class="row" ng-if="filtro == 'mes'">
+				<div class="col-md-6">
+					<div class="panel panel-primary">
+			            <div class="panel-heading">
+			            	<div class="row">
+			                    <div class="col-xs-3">
+			                        <i class="fa fa-check fa-5x"></i>
+			                    </div>
+			                    
+				                <div class="col-xs-9 text-right">			                  
+			            			<h4>Negocios Ganados </h4>
+									{{ventasCerradasGanadasMes.cont}} Negocios <span class="glyphicon glyphicon-chevron-right"></span> $ {{ventasCerradasGanadasMes.total}}	
+				                </div>
+				        	</div>      
+			            </div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-red">
+			            <div class="panel-heading">
+			            	<div class="row">
+			                    <div class="col-xs-3">
+			                        <i class="fa fa-times fa-5x"></i>
+			                    </div>
+				                <div class="col-xs-9 text-right">
+				                    <h4>Negocios Perdidos</h4>
+									{{ventasCerradasPerdidasMes.cont}} Negocios <span class="glyphicon glyphicon-chevron-right"></span>  $ {{ventasCerradasPerdidasMes.total}}
+				                </div>
+				            </div>          	
+						</div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-gray">
+			            <div class="panel-heading">
+	        	
+							<h4>Actividades Completadas</h4>
+							<h4><span class="glyphicon glyphicon-earphone"></span>   {{actividadesCompletadasMes[1].cont }}   Llamadas</h4> 
+							<h4><i class="fa fa-users"></i> {{actividadesCompletadasMes[2].cont}}    Reuniones</h4>
+							<h4><i class="fa fa-coffee"></i>  {{actividadesCompletadasMes[0].cont}}   Comidas</h4>
+							<h4><span class="glyphicon glyphicon-dashboard"></span>{{actividadesCompletadasMes[3].cont}}   Tareas</h4>	
+
+			            </div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-gray">
+			            <div class="panel-heading">
+			            	<h4>Actividades por Cumplir</h4>
+							<h4> <span class="glyphicon glyphicon-earphone"></span>   {{actividadesPorCumplirMes[1].cont }}   Llamadas</h4> 
+							<h4><h4><i class="fa fa-users"></i></span>   {{actividadesPorCumplirMes[2].cont }}   Reuniones</h4>
+							<h4><i class="fa fa-coffee"></i></span>   {{actividadesPorCumplirMes[0].cont }}   Comidas</h4>
+							<h4><span class="glyphicon glyphicon-dashboard"></span>   {{actividadesPorCumplirMes[3].cont }}   Tareas</h4> 	
+			            </div>
+			            <div class="panel-footer">
+			            </div>
+		        	</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Totales de Venta	
+
+			            </div>
+
+			            <div class="panel-footer">
+			            	<div google-chart chart="chartObjectVentasAnnio" style="height:300px; width:100%;"></div>	
+
+			            </div>
+		        	</div>
+				</div>
+			</div>	
+					<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Nuevos Contactos 	
+
+			            </div>
+
+			            <div class="panel-footer">
+			            	<div google-chart chart="chartObjectContactosMes" style="height:300px; width:100%;"></div>
+			            </div>
+		        	</div>
+				</div>
+			</div>	
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Actividades Completadas  	
+
+			            </div>
+
+			            <div class="panel-footer">
+			            	<div google-chart chart="chartObjectActividadesMes" style="height:300px; width:100%;"></div>
+			            </div>
+		        	</div>
+				</div>
+			</div>	
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-green">
+			            <div class="panel-heading"> 
+			            Negocios Ganados  	
+
+			            </div>
+
+			            <div class="panel-footer">
+			            	<div google-chart chart="chartObjectNegociosMes" style="height:300px; width:100%;"></div>
+			            </div>
+		        	</div>
+				</div>
+			</div>	
+
+
+		</div>
+
+		<div ng-if="filtro=='semana'">
+			<div google-chart chart="chartObjectVentasSemana" style="height:300px; width:100%;"></div>							
+		</div>
+	</div>
+
+
+
+
+</div>

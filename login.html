@@ -1,0 +1,93 @@
+
+<div ng-controller="loginController">
+
+
+
+  <div id="contenidoLogin" style="display:none">
+    <div class="row"> 
+      <div class="col-md-12" align="center">
+        <img src="./server/php/files/logo.png"  align="center">                          
+            <h1>Namakili</h1>
+            <h2>Sistema de Gestión de Relaciones de Negocios</h2>  
+
+      </div>     
+      </br></br>
+    </div>
+    <div class="col-md=12">
+      </br></br></br>
+      <div class="col-md-4">
+      </div>
+      <div id="containerLogin" class="col-md-4">
+        <form name="actividadForm"            
+                  ng-submit="verificarUsuario()" method="post" class="form-signin" novaildate>
+                    </br>
+                    </br>
+
+                    <input type="text" id="inputUser" ng-model="datosUsuario.usuario" name="usuario" placeholder="Usuario" required autofocus class="form-control" required/>
+                    
+                    <input type="password" id="inputPassword"  ng-model="datosUsuario.contrasena" class="form-control" placeholder="Contraseña" name="contrasena" required>
+                    <div class="errorMensaje" >{{msjError}}</div>
+                    <div class="checkbox">
+                  
+                  </div>
+                </br>
+                  <button class="btn btn-lg btn-primary btn-block" id="btnLogin" type="submit" class="btn btn-primary btn-lg btn-block" >Iniciar Sesión</button>
+                  <div align="right">
+                    <a href="#modalAgregarUsuario" data-toggle="modal" >¿No cuentas con usuario? Regístrate.</a>
+                  </div>                
+                  </br></br>        
+        </form>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+  </div>
+
+
+
+<!--Inicio del modal -->
+  <div class="modal fade" id="modalAgregarUsuario" role="dialog">
+      <div class="modal-dialog">              
+        <div class="modal-content">                
+          <div class="modal-body"> 
+            <h1>Regístrarse</h1>  
+            <form name="actividadForm"            
+             ng-submit="guardarUsuario()"   method="post" novalidate> 
+              </br>       
+              <input type="text" id="inputNewName" ng-model="nuevoUsuario.nombre" class="form-control" placeholder="Nombre" name="NuevoNombre" required autofocus>
+              <div class="errorMensaje" >{{msjErrorNombre}}</div>
+              </br>
+              <input type="text" id="inputNewUser" class="form-control" ng-model="nuevoUsuario.usuario" placeholder="Usuario" name="NuevoUser" required>
+              <div class="errorMensaje" >{{msjErrorUsuario}}</div>
+
+              </br>
+              <input type="email" id="inputNuevoCorreo" class="form-control" ng-model="nuevoUsuario.correo" placeholder="Correo" name="NuevoCorreo" value="" required>
+              <div class="errorMensaje" >{{msjErrorCorreo}}</div>
+
+              </br>
+              <input type="password" id="inputNewPassword" class="form-control" ng-model="nuevoUsuario.contrasena" placeholder="Contraseña" name="NuevaContrasena" value="" required > 
+              <div class="errorMensaje" >{{msjErrorContrasena}}</div>
+
+              </br>
+              <button class="btn btn-primary btn-lg btn-block" id="btnRegister" type="submit">Registrar Usuario</button>    
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn blackButton" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>    
+</div>
+
+
+
+
+<!--Fin del Modal-->
+</div>
+
+
+
+</html>

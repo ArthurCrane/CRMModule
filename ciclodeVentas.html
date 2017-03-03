@@ -1,0 +1,167 @@
+<div ng-controller="homeController as homeCtrl">	
+	<div id="contenidoAmostrar1"  style="display:none">		
+	  
+       	<div class="row">
+			<div class="col-md-8">
+				<h1>
+		       		Negocios en curso       	 
+		      	</h1>
+			</div>
+			<div class="col-md-4">
+	      	 	<button  type="button" class="btn blackButton btn-lg btn-block " data-toggle="modal" data-target="#modalNuevoNegocio">Agregar Negocio</button>
+	      	</div>
+	    </div>
+		</br>
+		<hr style="color: #0056b2;" />
+		<div class="row">
+			
+
+			<div class="col-md-2 col-sm-12 col-xs-15">
+				<div class="panel panel-black">
+	                <div class="panel-heading">Idea </br>${{totalIdea}}</div>
+	            </div>
+	            <div class="panel panel-gray" ng-repeat="venta in ventas | filter : 'Idea' " href="#main/venta" data-ui-sref="main.venta({nombre:venta.nombre}) " style="cursor:pointer">	
+	                <div class="panel-heading">{{venta.nombre}} </br>{{venta.contacto}}</br> $ {{venta.total}}</div>	
+	
+				</div>
+
+	       	</div>
+	       	<div class="col-md-2 col-sm-12 col-xs-15">
+	            <div class="panel panel-black">
+	                <div class="panel-heading">Contacto Establecido</br> ${{totalContacto}} </div>
+	            </div>
+	            <div class="panel panel-gray" ng-repeat="venta in ventas | filter : 'Contacto' " href="#main/venta" data-ui-sref="main.venta({nombre:venta.nombre})" style="cursor:pointer">	
+	                <div class="panel-heading">{{venta.nombre}} </br>{{venta.contacto}}</br>$ {{venta.total}}</div>					
+				</div>
+	       	</div>
+			<div class="col-md-2 col-sm-12 col-xs-15">
+	            <div class="panel panel-black">
+	                <div class="panel-heading">Necesidad </br> $ {{totalNecesidad}}</div>
+	            </div>
+	            <div class="panel panel-gray" ng-repeat="venta in ventas | filter : 'Necesidad' " href="#main/venta" data-ui-sref="main.venta({nombre:venta.nombre})" style="cursor:pointer">	
+	                <div class="panel-heading">{{venta.nombre}} </br>{{venta.contacto}}</br>$ {{venta.total}}</div>					
+				</div>
+	        </div>
+	  		<div class="col-md-2 col-sm-12 col-xs-15">
+	            <div class="panel panel-black">
+	                <div class="panel-heading">Propuesta Presentada</br>$ {{totalPropuesta}}</div>
+	            </div>
+	            <div class="panel panel-gray" ng-repeat="venta in ventas | filter : 'Propuesta' " href="#main/venta" data-ui-sref="main.venta({nombre:venta.nombre})" style="cursor:pointer">	
+	                <div class="panel-heading">{{venta.nombre}} </br>{{venta.contacto}}</br>$ {{venta.total}}</div>					
+				</div>
+	        </div>
+			<div class="col-md-2 col-sm-12 col-xs-15">
+	            <div class="panel panel-black">
+	                <div class="panel-heading">Negociación </br>  $ {{totalNegociacion}}</div>
+	            </div>
+	            <div class="panel panel-gray" ng-repeat="venta in ventas | filter : 'Negociación' " href="#main/venta" data-ui-sref="main.venta({nombre:venta.nombre})" style="cursor:pointer">	
+	                <div class="panel-heading">{{venta.nombre}} </br>{{venta.contacto}}</br>$ {{venta.total}}</div>					
+				</div>
+	        </div>
+		
+		</div>
+
+
+<!--
+	Fin de la pagina
+-->
+<!--Inicio del modal -->
+	<div class="modal fade" id="modalNuevoNegocio" role="dialog">
+		<div class="modal-dialog">					    
+			<div class="modal-content">					       
+				<div class="modal-body">     
+					<h1>Agregar Negocio</h1>
+					<form name="negocioForm"	novalidate 	ng-submit=" agregarVenta()">
+
+						
+								Nombre del Negocio:</br>
+								<input ng-model="NuevoNegocio.nombre" class="form-control" required/>
+								<div class="errorMensaje" >{{errorNombre}}</div>
+								Contacto:	
+								<select class="form-control" id="sel1" ng-model="NuevoNegocio.contacto">
+							        <option ng-repeat="contacto in contactos">{{contacto.nombreContacto}}</option>						       	      
+								</select>
+								<div class="errorMensaje" >{{errorContacto}}</div>
+								<!--
+								</br>Cantidad:</br> 
+								<input ng-model="NuevoNegocio.cantidad" class="form-control" required/>		
+								<div class="errorMensaje" >{{errorCantidad}}</div>		
+								-->
+								Etapa: </br>
+								 <select class="form-control" id="sel2" ng-model="NuevoNegocio.etapa">
+								    <option>Idea</option>
+								    <option>Contacto Establecido</option>	
+								    <option>Necesidad Descubierta</option>	
+								    <option>Propuesta Presentada</option>	
+								    <option>Negociación</option>			      
+								</select>
+								<div class="errorMensaje" >{{errorEtapa}}</div>
+								
+								Productos </br>
+								<input type="text" class="form-control" placeholder="Buscar producto por nombre" ng-model="query">
+						        <input type="checkbox" ng-model="checkTodos" ng-click="seleccionarTodos()">Seleccionar todos 
+								<table  class="table table-bordered letra-14" width="50%"  align="center"style="height:100px;">	
+									<thead class="thead-inverse">
+										<tr>
+											<th class="col-md-1"></th>
+											<th class="col-md-7">Nombre</th>
+											<th class="col-md-4">Cantidad</th>
+											
+															
+										</tr>	
+									</thead>								
+									<tbody>
+										<tr dir-paginate="producto in productos | filter:query | itemsPerPage:5 ">
+											<td> <input type="checkbox" ng-model="producto.isSelected">	
+											</td>
+											<td>{{producto.nombreProducto}} 
+											</td>	
+
+											<td>												
+											<input ng-model="producto.cantidad" class="form-control"  />
+											</td>
+										</tr>	
+									</tbody>										
+								</table>									
+								<div class="errorMensaje" >{{errorProductos}}</div>
+
+								<div id="paginacion" >								
+								   <dir-pagination-controls
+								       max-size="5"
+								       direction-links="true"
+								       boundary-links="true" >
+								    </dir-pagination-controls>
+								 </div>
+
+
+						</br>
+							<!--			   
+						</br>Producto: 
+						<select class="form-control" id="sel2" ng-model="NuevoNegocio.producto">
+					        <option ng-repeat="producto in productos">{{producto.nombreProducto}}</option>						       	      
+						</select>
+
+					-->
+									
+
+						
+						</br>
+						<button class="btn blackButton btn-lg btn-block" id="botonAgregarNegocio" type="submit">Agregar</button>    
+
+						</br></br>				
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+
+		</div>
+	</div>	  
+
+
+<!--Fin del Modal-->
+
+
+</div>
+

@@ -1,0 +1,78 @@
+<div ng-controller="contactoController">
+	<h1 class="page-header">
+     {{contacto.nombreContacto}}   	
+    </h1>
+
+</br>
+   
+	<div id="containerGeneral">
+							
+							
+									<div class="row">
+
+										<div class="col-md-4">
+											<div class="panel panel-default">									
+												
+												<div class="panel-body">					
+
+													</br>					
+													<img src="{{contacto.imagen}}" class="img-rounded"  width="200" height="230" align="center"></br>		
+													<div ng-if="configClientes.puesto==true"><h4 >Puesto</h4>{{contacto.puesto}} </div>
+													
+													<h4>Empresa:</h4>{{contacto.empresa}} </br>		
+													<h4>Celular:</h4>{{contacto.celular}} </br>
+													<div ng-if="configClientes.telefonoOficina==true"><h4 >Teléfono Oficina</h4>{{contacto.telefono}}</div>
+
+													<h4>Correo:</h4>{{contacto.correo}} </br>
+													<h4>Fecha de Nacimiento</h4>{{contacto.fechaNacimiento | date:"dd/MM/yyyy"}} </br>
+													<div ng-if="configClientes.anotaciones==true"><h4  >Anotaciones</h4>{{contacto.anotaciones}}	</div>	
+													<div ng-if="configClientes.hobbies==true"><h4 >Hobbies</h4>	{{contacto.hobbies}} </div>
+													<div ng-if="configClientes.preferencias==true"><h4 >Preferencias</h4>{{contacto.preferencias}}</div>
+													<div ng-if="configClientes.estadoCivil==true"><h4 >Estado Civil</h4>{{contacto.estadoCivil}}</div>
+													<div ng-if="configClientes.personalidad==true"><h4 >Personalidad</h4>{{contacto.personalidad}}</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-md-8">
+											<div class="panel panel-default">				
+												<div class="panel-body">						
+													<div class="row">
+														<div class="col-md-12">	
+															<h2>Actividades Cumplidas</h2>			
+
+															</br>						
+															<div ng-repeat="actividad in actividades track by $index " >
+																<div id="actividadesContacto">
+																	{{actividad.venta}}
+																	</br>
+																	<div class="row">
+																		<div class="col-md-8">{{actividad.tipo}}</div>
+																		<div class="col-md-2">{{actividad.fecha | date:"dd/MM/yyyy"}}</div>
+																		<div class="col-md-2">{{actividad.hora | date :"hh:mm .a"}}</div>
+																	</div>
+																	<div ng-if="actividad.anotaciones!= ''">
+																		Anotaciones:</br>									
+																		{{actividad.anotaciones}}
+																	</div>
+																</div>
+															</div>
+														</div>								
+													</div>
+												</div>
+											</div>	
+										</div>
+
+									</div>						
+									
+								
+							
+
+
+
+
+						
+		
+	</div>
+</div>

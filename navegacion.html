@@ -1,0 +1,104 @@
+
+  <div id="wrapper">            
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="navegacionController">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#home">CRM</a>
+                    </div>
+                    <!-- Top Menu Items -->
+                    <ul class="nav navbar-right top-nav">
+                    
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu alert-dropdown">
+                                <li ng-repeat="notificacion in notificaciones track by $index">
+                                    <a href="#venta" data-ui-sref="venta({nombre:notificacion.nombre})" > Tipo : {{notificacion.tipo}}    
+                                    Fecha:{{notificacion.fecha | date:"dd/MM/yyyy"}}   
+                                    </br>Hora:{{notificacion.hora  |  date:" hh: mm . a "}} <span class="label label-default"></span>                           
+                                    </a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">View All</a>
+                                </li>
+                            </ul>
+                        </li>
+                       
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user}} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#main/perfil"><i class="fa fa-fw fa-user"></i>  Perfil</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-fw fa-gear"></i>  Configuración </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li> <a href="" ng-click="this.cerrarSession($event)" > <span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav side-nav">
+                              <li>
+                                <a href="#main/tablero"><i class="fa fa-fw fa-dashboard"></i>  Tablero</a>
+                            </li>
+                            <li>
+                                <a href="#main/cicloVenta"><i class="fa fa-fw fa-briefcase"></i>  Negocios en curso</a>
+                            </li>
+                            <li>
+                                <a href="#main/ventasConcretadas"><i class="fa fa-fw fa-check"></i>  Ventas</a>
+                            </li>
+                            <li>
+                                <a href="#main/productos"><i class="fa fa-fw fa-cubes"></i>  Productos</a>
+                            </li>
+                            <li>
+                                <a href="#main/clientes"><i class="fa fa-fw fa-user"></i>  Contactos</a>
+                            </li>
+                            <li>
+                                <a href="#main/estadisticas"><i class="fa fa-fw fa-bar-chart-o "></i>  Estadísticas</a>
+                            </li>
+                            <li>
+                                <a href="#main/objetivosGerente"><i class="fa fa-fw fa-edit"></i>  Objetivos</a>
+                            </li>
+                                             
+                            <li ng-if="tipoUsuario=='admin'">
+                                <a href="#main/grupos"><i class="fa fa-fw fa-users"></i>  Grupos</a>
+                            </li>
+                            <li>
+                                <a href="#main/configuracion"><i class="fa fa-fw fa-cog"></i>  Configuracion</a>
+                            </li>   
+                            <li ng-if="tipoUsuario=='admin'">
+                                <a href="#main/asignaciones" ><i class="fa fa-fw fa-tasks"></i> Asignaciones</a>
+                            </li>
+                         
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+    </nav>
+
+
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div ui-view ="content" id="contenido" class="col-xs-12 col-md-12"></div>
+                </div>
+              
+            </div>
+
+        </div>

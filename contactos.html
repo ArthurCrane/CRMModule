@@ -1,0 +1,228 @@
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+<div ng-controller="contactosController">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="jquery.ui.widget.js"></script>
+	<script src="jquery.iframe-transport.js"></script>
+	<script src="jquery.fileupload.js"></script>
+
+
+	<div id="contenidoContactos"  style="display:none">
+
+		<h1 class="page-header">
+	       	Contactos      	
+	     </h1>
+
+	    <div class="row">
+				<div class="col-md-4">
+					Importar Contacto:
+					<input type="file" placeholder="+" file-change="handler($event,files)" ng-model="MyFiles" />   	 
+				</div>
+				<div class="col-md-4">					
+		      	</div>
+		      	<div class="col-md-4">
+		      		<button  type="button" class="btn blackButton btn-lg btn-block" data-toggle="modal" data-target="#modalNuevoContacto">Agregar Contacto</button>
+		      	</div>
+		</div>
+		</br>
+
+<!--
+		<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+-->
+	
+
+
+
+
+
+
+
+
+
+			<div class="panel panel-default">	
+				<div class="panel-body table-responsive">	
+					
+
+					<table  class="table letra-14" align="center">
+						<thead class="thead-inverse">
+							<tr>
+								<th class="col-md-1">Nombre</th>
+								<th class="col-md-1">Puesto</th>
+								<th class="col-md-1">Empresa</th>
+								<th class="col-md-1">Teléfono Oficina</th>
+								<th class="col-md-1">Celular</th>
+								<th class="col-md-1">Correo</th>
+								<th class="col-md-1">Fecha de Nacimiento</th>
+								<th class="col-md-2">Anotaciones</th>
+								<th class="col-md-1"></th>	
+								<th class="col-md-1"></th>						
+							</tr>	
+						</thead>	
+					 	<tbody>						
+							<tr dir-paginate="contacto in contactos | filter: query  | itemsPerPage:10">							
+
+								<td  href="#main/contacto" data-ui-sref="main.contacto({nombreContacto:contacto.nombreContacto,id:contacto.idContacto})"
+							 style="cursor:pointer">{{contacto.nombreContacto}}</td>
+								<td>{{contacto.puesto}}</td>
+								<td>{{contacto.empresa}}</td>
+								<td>{{contacto.telefono}}</td>
+								<td>{{contacto.celular}}</td>
+								<td>{{contacto.correo}}</td>
+								<td>{{contacto.fechaNacimiento  | date:"dd/MM/yyyy" }}</td>
+								<td>{{contacto.anotaciones}}</td>				
+								<td>
+									<button  class="btn btn-success" ng-click="editarContacto(contacto)" data-toggle="modal" data-target="#modalEditarContacto">  <span class="glyphicon glyphicon-pencil"></span></button>
+								</td>
+								<td>
+									<button  class="btn btn-danger " data-toggle="modal" data-target="#confirm" ng-click="setContactoABorrar(contacto)" > <span class="glyphicon glyphicon-trash"></button>
+
+								</td>
+							</tr>	
+					 	<tbody>									
+					</table>	
+
+					<div id="paginacion">
+					   <dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
+					 </div>
+				</div>
+			</div>
+
+	</div>
+
+
+	<div class="modal fade" id="confirm" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+					  <div class="modal-body">
+					    ¿Estás seguro de que quieres eliminar el contacto?
+					  </div>
+					  <div class="modal-footer">
+					    <button type="button" data-dismiss="modal" ng-click="borrarContacto(contacto)" class="btn btn-primary" id="delete">Sí, Eliminar Contacto</button>
+					    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+					  </div>
+					</div>
+				</div>
+	</div>
+
+
+
+	<!--Inicio del modal -->
+		<div class="modal fade" id="modalNuevoContacto" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+
+							<h1>Agregar un nuevo Contacto</h1>	
+							<form name="contactosForm" novalidate			
+							ng-submit=" agregarContacto()" >
+								</br>
+								Nombre:</br>
+								<input ng-model="NuevoContacto.nombreContacto" class="form-control" required/>
+								<div class="errorMensaje" >{{errorNombre}}</div>
+								Puesto:</br>
+								<input ng-model="NuevoContacto.puesto" class="form-control" required/>
+								<div class="errorMensaje" >{{errorPuesto}}</div>
+								Empresa:</br>
+								<input ng-model="NuevoContacto.empresa" class="form-control" required/>
+								<div class="errorMensaje" >{{errorEmpresa}}</div>
+								Teléfono Oficina:</br>
+								<input ng-model="NuevoContacto.telefono" class="form-control" required/>
+								<div class="errorMensaje" >{{errorTelefono}}</div>
+								Celular:</br>
+								<input ng-model="NuevoContacto.celular" class="form-control" required/>
+								<div class="errorMensaje" >{{errorCelular}}</div>
+								Correo:</br>
+								<input ng-model="NuevoContacto.correo" class="form-control" required/>
+								<div class="errorMensaje" >{{errorCorreo}}</div>
+								Fecha de Nacimiento:</br>								
+								<input type="date"  name="input" class="form-control" ng-model="NuevoContacto.fechaNacimiento" placeholder="{{dd-MM-yyyy}}" required />
+								<div class="errorMensaje" >{{errorCumpleanos}}</div>
+								Anotaciones:</br>
+								<textarea class="form-control" rows="5" ng-model="NuevoContacto.anotaciones"></textarea>
+								<div class="errorMensaje" >{{errorAnotaciones}}</div>
+								</br>
+								Foto de Perfil:</br>
+								<input id="fileupload" type="file" name="files[]" data-url="server/php/">
+								
+							
+
+								<button class="btn btn-primary btn-lg btn-block" id="botonAgregarContacto" type="submit">Agregar Contacto</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+		</div>	  
+
+	<!--Fin del Modal-->
+
+
+	<!--Inicio del modal -->
+			<div class="modal fade" id="modalEditarContacto" role="dialog">
+				<div class="modal-dialog">					    
+					<div class="modal-content">					       
+						<div class="modal-body">    
+
+							<h1>Editar Contacto</h1>	
+							<form name="productosForm" novalidate			
+							ng-submit="guardarContacto()" >
+								</br>
+								Nombre:</br>
+								<input ng-model="contactoAModificar.nombreContacto" class="form-control" required/>
+								<div class="errorMensaje" >{{errorNombre}}</div>
+								Puesto:</br>
+								<input ng-model="contactoAModificar.puesto" class="form-control" required/>
+								<div class="errorMensaje" >{{errorPuesto}}</div>
+								Empresa:</br>
+								<input ng-model="contactoAModificar.empresa" class="form-control" required/>
+								<div class="errorMensaje" >{{errorEmpresa}}</div>
+								Teléfono Oficina:</br>
+								<input ng-model="contactoAModificar.telefono" class="form-control" required/>
+								<div class="errorMensaje" >{{errorTelefono}}</div>
+								Celular:</br>
+								<input ng-model="contactoAModificar.celular" class="form-control" required/>
+								<div class="errorMensaje" >{{errorCelular}}</div>
+								Correo:</br>
+								<input type="email" ng-model="contactoAModificar.correo" class="form-control" required/>
+								<div class="errorMensaje" >{{errorCorreo}}</div>
+								Fecha de Nacimiento:</br>
+								<input type="date"  name="input" class="form-control" ng-model="contactoAModificar.fechaNacimiento" placeholder="{{dd-MM-yyyy}}" required />
+
+								<div class="errorMensaje" >{{errorCumpleanos}}</div>
+								{{NuevoContacto.fechaNacimiento}}
+
+								Anotaciones:</br>
+								<textarea class="form-control" rows="5" ng-model="contactoAModificar.anotaciones"></textarea>
+								<div class="errorMensaje" >{{errorAnotaciones}}</div>
+
+								Foto de Perfil:</br>
+								<input id="fileupload2" type="file" name="files[]" data-url="server/php/">
+
+
+								</br>
+								<button class="btn btn-primary btn-lg btn-block" id="botonAgregarProducto" type="submit">Actualizar Contacto</button>    
+
+								</br></br>				
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+
+				</div>
+			</div>	 
+
+
+</div>
+
