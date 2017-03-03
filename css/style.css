@@ -1,0 +1,227 @@
+body {
+ background-color: #fff;
+ height: 100%;
+}
+
+.img_container {
+    text-align: center;
+  
+}
+#fullContainer{
+  background-color: #F9F9F9;
+  height: 100%;
+  width:100%;
+}
+.wrapper{
+       background-color: #fff;
+    height: 100%;
+}
+
+#fullcontenido{
+    height: 100%;
+}
+
+#contenido{
+    height: 100%;
+}
+
+
+.panel-black{
+	border-color: #1C1C1C;
+	color: #fff;
+
+}
+
+
+#equalheigth{
+}
+
+
+.rowGridColumna{
+    
+ float: left;
+    margin: 0px;
+    padding-bottom: 1000px;
+    margin-bottom: -1000px;
+    
+    height: 100px;
+}
+
+.rowGrid{
+ 
+     overflow: hidden;
+
+}
+
+.panel-black>.panel-heading {
+    color: #fff;
+    background-color: #353d47;
+    border-color: #353d47;
+
+}
+
+.panel-gray{
+	border-color:#D8D8D8;
+    height:100%;
+
+}
+
+.panel-gray>.panel-heading {
+    background-color: #D8D8D8;
+    border-color: #D8D8D8;
+    font-size: 12px;
+}
+
+.panel-gray2{
+	border-color: #585858;
+	color: #fff;
+
+}
+
+.panel-gray2>.panel-heading {
+    color: #fff;
+    background-color: #1C1C1C;
+    border-color: #1C1C1C;
+
+}
+
+
+.blackButton{
+	background-color: #D1A538;;
+	color: #fff;
+}
+.blueButton{
+  background-color: #353d47;;
+  color: #fff;
+}
+
+
+
+.glyphicon.glyphicon-ok {
+    font-size: 100px;
+}
+#paginacion{
+	text-align: center;
+	margin: 0 auto;
+}
+
+
+#actividadesContacto{
+	  background-color: #F2F2F2;
+	  padding: 10px;
+	  border: 5px;
+	  margin:10px;
+
+}
+
+.navbar-inverse {
+    background-color: #353d47;
+    border-color: #0B3861;
+}
+
+@media(min-width:768px) {
+    .side-nav {        
+        background-color: #444E5B;
+    
+    }
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color: #fff;
+  background-color: #353d47;
+}
+
+
+/*
+*/
+
+.hidden-scrollbar {
+  overflow:hidden;
+  text-align:justify;    
+}
+
+.hidden-scrollbar .inner {
+  overflow:auto;
+  margin:15px -300px 15px 15px;
+  padding-right:300px; /* Samakan dengan besar margin negatif */
+}
+
+#panelSinPadding{
+    padding: 0px;
+    margin: 0px;
+}
+
+.errorMensaje{
+  color: red;
+}
+
+#contenedorPestannias{
+
+    border-color: #353d47;
+}
+
+
+
+
+
+
+
+
+.panel-blue{
+  border-color:#D8D8D8;
+    height:100%;
+
+}
+
+.panel-blue>.panel-heading {
+    background-color: #353d47;
+    border-color: #353d47;
+    color: #fff;
+    font-size: 12px;
+}
+
+
+/**ciclo de ventas*/
+.panelNombreEtapas{
+  background-color: #353d47;
+  color: #fff;
+ 
+}
+
+.col-xs-15{
+    width:20%;
+}
+
+#pagination{
+  text-align: right;
+  margin: 0 auto;
+}
+
+.pagination > .active > span:focus {
+  z-index: 3;
+  color: #fff;
+  cursor: default;
+  background-color: #353d47;
+  border-color: #353d47;
+}
+
+.pagination>li.active>a {
+  background-color: #353d47;
+  color: #fff;
+}
+
+
+
+.selected{
+  background-color: #353d47;
+  color: #fff;
+}
+
+
+.scrollable-menu {
+    height: auto;
+    max-height: 600px;
+    width:500px;
+    overflow-x: hidden;
+    padding: 5px;
+}
